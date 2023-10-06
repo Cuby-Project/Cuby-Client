@@ -2,7 +2,7 @@
   "name": "cuby",
   "version": "1.0.0",
   "description": "A Rubik's cube app",
-  "main": "index.js",
+  "main": "src/js/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron ."
@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/quentinformatique/Cuby#readme",
   "devDependencies": {
-    "electron": "^26.3.0"
+    "electron": "^26.3.0",
+    "tailwindcss": "^3.3.3"
   }
 }
