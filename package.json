@@ -1,0 +1,22 @@
+{
+  "name": "cuby",
+  "version": "1.0.0",
+  "description": "A Rubik's cube app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/quentinformatique/Cuby.git"
+  },
+  "keywords": [
+    "rubik's cube"
+  ],
+  "author": "quentiformatique",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/quentinformatique/Cuby/issues"
+  },
+  "homepage": "https://github.com/quentinformatique/Cuby#readme"
+}
