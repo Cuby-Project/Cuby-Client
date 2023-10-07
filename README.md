@@ -1,5 +1,5 @@
 <div align="center">
-<img src="src/img/logo.png" width="150" height="150" alt="logo">
+<img src="src/img/icon.png" width="150" height="150" alt="logo">
 
 # Cuby (work in progress)
 
