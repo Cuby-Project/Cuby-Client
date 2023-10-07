@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.side-bar-item {
+    @apply relative flex items-center justify-center
+    h-12 w-12 mt-2 mb-2 mx-auto hover:bg-green-600 bg-custom-gray-0 text-custom-green hover:rounded-xl rounded-3xl
+    transition-all duration-300 ease-linear cursor-pointer shadow-lg;
+}
+
+.side-bar-main {
+    @apply relative flex items-center justify-center
+    h-12 w-12 mt-2 mb-2 mx-auto cursor-pointer shadow-lg hover:scale-90 transition-all duration-300 ease-linear;
+}
