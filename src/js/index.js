@@ -1,12 +1,14 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
 
+let win;
 function createWindow () {
-    const win = new BrowserWindow({
+    win = new BrowserWindow({
         width: 800,
         height: 600,
         minWidth: 800,
         minHeight: 600,
+        frame: false,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js')
         }
@@ -24,6 +26,23 @@ app.whenReady().then(() => {
             createWindow()
         }
     })
+
+    ipcMain.handle('closeWindow', (event) => {
+        app.quit();
+    })
+
+    ipcMain.handle('maximizeWindow', (event) => {
+        if (win.isMaximized()) {
+            win.restore();
+        } else {
+            win.maximize();
+        }
+    })
+
+    ipcMain.handle('minimizeWindow', (event) => {
+        console.log('minimize')
+        win.minimize();
+    })
 })
 
 app.on('window-all-closed', () => {
@@ -31,3 +50,4 @@ app.on('window-all-closed', () => {
         app.quit()
     }
 })
+

@@ -1,0 +1,58 @@
+body {
+    margin: 0;
+    background: #282C34;
+    color: #FFF;
+    padding: 20px;
+    font-family: sans-serif;
+    text-align: justify;
+}
+
+#titlebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 2px;
+    border-bottom: 0;
+    background: #282b30;
+}
+
+.draggable {
+    padding: 2px;
+    font-family: sans-serif;
+    font-size: 14px;
+    display: flex;
+    justify-content: end;
+    -webkit-app-region: drag;
+}
+
+.controls {
+    -webkit-app-region: no-drag;
+    user-select: none;
+    padding: 5px 0 0 0;
+}
+
+.button {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 100%;
+    cursor: pointer;
+}
+
+.button.close { background: #F03823; }
+.button.minimize { background: #FCA101; margin: 0 3px; }
+.button.maximize { background: #66E017; }
+
+.button.close:hover { background: #CC2411; }
+.button.minimize:hover { background: #D48802; }
+.button.maximize:hover { background: #4EBD06; }
+
+.body {
+    margin-top: 10px /* Set to the height of the #titlebar */
+}
+
+.title {
+    padding: 3px 30px 3px 10px;
+    color: #7AE582;
+}

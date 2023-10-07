@@ -4,15 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../../dist/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/titlebar.css" />
     <script defer src="../../node_modules/@fortawesome/fontawesome-free/js/brands.js"></script>
     <script defer src="../../node_modules/@fortawesome/fontawesome-free/js/solid.js"></script>
     <script defer src="../../node_modules/@fortawesome/fontawesome-free/js/fontawesome.js"></script>
-
+    <script defer src="../js/render.js"></script>
     <title>Cuby</title>
 </head>
 <body class="bg-custom-gray-0">
-
-<div class="fixed top-0 left-0 h-screen w-16 flex flex-col bg-custom-gray-2 shadow-lg">
+<header id="titlebar">
+    <div class="draggable">
+        <div class="controls">
+            <button id="close" class="button close"></button>
+            <button id="minimize" class="button minimize"></button>
+            <button id="maximize" class="button maximize"></button>
+        </div>
+    </div>
+</header>
+<div class="fixed top-7 left-0 h-screen w-16 flex flex-col bg-custom-gray-2 shadow-lg">
+    <hr class="bg-custom-gray-0 border border-custom-gray-0 rounded-full mx-2" />
     <a href="index.html">
         <div class="side-bar-main">
             <img src="../img/icon.png" alt="icon">
@@ -45,7 +55,5 @@
         </div>
     </a>
 </div>
-
-<h1 class="text-3xl font-bold underline text-custom-green text-center m-6">Cuby</h1>
 </body>
 </html>
