@@ -1,5 +1,5 @@
 <div align="center">
-<img src="src/img/icon.png" width="150" height="150" alt="logo">
+<img src="src/img/icon.png" width="150" height="173" alt="logo">
 
 # Cuby (work in progress)
 
@@ -19,10 +19,6 @@ An electorn js app who contains everything you need for rublicks, it includes a 
 - timer
 - cube solver
 - algorithm library
-## Installation
-
----
-We will distribute an executable later, if you want to use it now, you will need to clone the project and run the command "npm start"
 
 ## Sources
 
