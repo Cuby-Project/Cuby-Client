@@ -12,3 +12,7 @@
     @apply relative flex items-center justify-center
     h-12 w-12 mt-2 mb-2 mx-auto cursor-pointer shadow-lg hover:scale-90 transition-all duration-300 ease-linear;
 }
+
+.current-item {
+    @apply rounded-xl;
+}
