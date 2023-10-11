@@ -8,8 +8,12 @@ const api = {
     },
     minimizeWindow: () => {
         ipcRenderer.invoke("minimizeWindow");
+    },
+    generateScramble: async () => {
+        return await ipcRenderer.invoke("generateScramble");
     }
 };
+
 
 
 contextBridge.exposeInMainWorld("api", api);

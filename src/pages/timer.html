@@ -27,97 +27,68 @@
         </div>
     </a>
     <a href="timer.html">
-        <div class="current-item side-bar-item">
-            <i class="fa-solid fa-stopwatch text-custom-green fa-2xl hover:text-white"></i>
+        <div class="current-item group side-bar-item">
+            <i class="fa-solid fa-stopwatch text-custom-green fa-2xl group-hover:text-white"></i>
         </div>
     </a>
     <a href="solver.html">
-        <div class="side-bar-item">
-            <i class="fa-solid fa-share-nodes text-custom-green fa-2xl hover:text-white"></i>
+        <div class="side-bar-item group">
+            <i class="fa-solid fa-share-nodes text-custom-green fa-2xl group-hover:text-white"></i>
         </div>
     </a>
     <a href="stats.html">
-        <div class="side-bar-item">
-            <i class="fa-solid fa-chart-simple text-custom-green fa-2xl hover:text-white"></i>
+        <div class="side-bar-item group">
+            <i class="fa-solid fa-chart-simple text-custom-green fa-2xl group-hover:text-white"></i>
         </div>
     </a>
     <a href="algs.html">
-        <div class="side-bar-item">
-            <i class="fa-solid fa-list text-custom-green fa-2xl hover:text-white"></i>
+        <div class="side-bar-item group">
+            <i class="fa-solid fa-list text-custom-green fa-2xl group-hover:text-white"></i>
         </div>
     </a>
     <a href="settings.html">
-        <div class="side-bar-item">
-            <i class="fa-solid fa-gears text-custom-green fa-2xl hover:text-white"></i>
+        <div class="side-bar-item group">
+            <i class="fa-solid fa-gears text-custom-green fa-2xl group-hover:text-white"></i>
         </div>
     </a>
 </div>
 
-<div class="flex place-content-between h-10 w-95 bg-custom-gray-2 shadow-lg p-2 m-3 rounded-xl">
-    <button class="flex">
-        <i class="fa-solid fa-rotate fa-xl pr-2 text-custom-green"></i>
-        <div class="text-white">Regenerate</div>
-    </button>
-    <div class="text-white font-bold">
-        generated scramble
-    </div>
-    <div>
-        <label class="text-white" for="select-Scramble">cube : </label>
-        <select class="bg-custom-gray-2 text-white rounded-2xl border p-0.5 border-custom-green" name="select-Scramble" id="select-Scramble">
-            <option value="3x3">3x3</option>
-            <option value="2x2">2x2</option>
-            <option value="4x4">4x4</option>
-            <option value="5x5">5x5</option>
-            <option value="6x6">6x6</option>
-            <option value="7x7">7x7</option>
-            <option value="square-one">square-one</option>
-            <option value="pyraminx">pyraminx</option>
-            <option value="skewb">skewb</option>
-            <option value="megaminx">megaminx</option>
-        </select>
-    </div>
+<div class="flex flex-col justify-between h-[calc(100vh-35px)]">
+    <div class="flex place-content-between h-10 bg-custom-gray-2 shadow-lg p-2 m-3 rounded-xl">
+        <button id="regenerate" class="flex">
+            <i class="fa-solid fa-rotate fa-xl pr-2 text-custom-green"></i>
+            <div class="text-white">Regenerate</div>
+        </button>
+        <div id="scramble" class="text-white font-bold">
+            scramble
+        </div>
+        <div>
+            <label class="text-white" for="select-Scramble">cube : </label>
+            <select class="bg-custom-gray-2 text-white rounded-2xl border p-0.5 border-custom-green" name="select-Scramble" id="select-Scramble">
+                <option value="3x3">3x3</option>
+                <option value="2x2">2x2</option>
+                <option value="4x4">4x4</option>
+                <option value="5x5">5x5</option>
+                <option value="6x6">6x6</option>
+                <option value="7x7">7x7</option>
+                <option value="square-one">square-one</option>
+                <option value="pyraminx">pyraminx</option>
+                <option value="skewb">skewb</option>
+                <option value="megaminx">megaminx</option>
+            </select>
+        </div>
 
-</div>
-<div class="w-full h-96 flex justify-center items-center">
-     <div class="text-white font-bold text-8xl">
-         00:00:00
-     </div>
-</div>
-<div class="bg-custom-gray-2 h-full w-95 rounded-2xl grid grid-rows-1 grid-cols-2 p-4 text-xl">
-    <div class="bg-custom-gray-3 flex flex-col p-6 rounded-2xl m-2">
+    </div>
+    <div class="w-full h-80 flex justify-center items-center">
+        <div id="timer" class="text-white font-bold text-8xl xl:text-9xl">
+            00:00:00
+        </div>
+    </div>
+    <div class="flex place-content-between h-10 bg-custom-gray-2 shadow-lg p-2 m-3 rounded-xl">
         <div class="text-white">Personal best : <span class="text-custom-green">15.37</span></div>
         <div class="text-white">Average : <span class="text-custom-green">20.08</span></div>
         <div class="text-white">Best ao5 : <span class="text-custom-green">18.89</span></div>
         <div class="text-white">solves : <span class="text-custom-green">128</span></div>
-    </div>
-    <div class="bg-custom-gray-3 text-center text-white p-6 rounded-2xl m-2">
-        <table>
-            <tr>
-                <th>number</th>
-                <th>time</th>
-                <th>ao5</th>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>15.37</td>
-                <td>18.89</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>15.37</td>
-                <td>18.89</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>15.37</td>
-                <td>18.89</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>15.37</td>
-                <td>18.89</td>
-            </tr>
-        </table>
     </div>
 </div>
 

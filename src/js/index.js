@@ -51,3 +51,29 @@ app.on('window-all-closed', () => {
     }
 })
 
+let moves = ["U", "D", "F", "B", "R", "L"]
+let variations = ["", "'", "2"]
+let minMoves = 20;
+let maxMoves = 25;
+let lengthScramble = Math.random() * (maxMoves - minMoves) + minMoves;
+
+const { ipcRenderer } = require('electron');
+
+function generateScramble() {
+    let scramble = "";
+    let lastMove = "";
+    for (let i = 0; i < lengthScramble; i++) {
+        let move = moves[Math.floor(Math.random() * moves.length)];
+        while (move === lastMove) {
+            move = moves[Math.floor(Math.random() * moves.length)];
+        }
+        scramble += move + variations[Math.floor(Math.random() * variations.length)] + " ";
+        lastMove = move;
+    }
+    return scramble;
+}
+
+ipcMain.handle('generateScramble', (event) => {
+    return generateScramble();
+});
+
