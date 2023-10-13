@@ -4,7 +4,7 @@
 
 .side-bar-item {
     @apply relative flex items-center justify-center
-    h-12 w-12 mt-2 mb-2 mx-auto hover:bg-green-600 bg-custom-gray-0 text-custom-green hover:rounded-xl rounded-3xl
+    h-12 w-12 mt-2 mb-2 mx-auto hover:bg-custom-blue bg-custom-gray-0 text-custom-blue hover:rounded-xl rounded-3xl
     transition-all duration-300 ease-linear cursor-pointer shadow-lg;
 }
 

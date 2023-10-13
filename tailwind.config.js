@@ -8,7 +8,7 @@ module.exports = {
                 'custom-gray-1': '#36393e',
                 'custom-gray-2': '#282b30',
                 'custom-gray-3': '#1e2124',
-                'custom-green': '#7AE582',
+                'custom-blue': '#009FFD',
             },
             cardHeight: {
                 'card': '500px',
