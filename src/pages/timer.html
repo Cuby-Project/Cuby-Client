@@ -90,45 +90,53 @@
             00:00:00
         </div>
     </div>
-    <div class="grid grid-rows-1 grid-cols-2 h-[25vh] bg-custom-gray-2 shadow-lg p-2 m-3 rounded-xl">
-        <div class="bg-custom-gray-3 rounded-xl h-full w-hull flex flex-col items-center justify-center text-2xl">
+    <div class="grid grid-rows-1 grid-cols-2 h-[25vh] bg-custom-gray-2 shadow-lg m-3 rounded-xl p-2">
+        <div class="bg-custom-gray-3 rounded-xl h-full w-hull flex flex-col items-center justify-center text-2xl mx-2">
             <div class="text-white">Personal best : <span class="text-custom-blue">15.37</span></div>
             <div class="text-white">Average : <span class="text-custom-blue">20.08</span></div>
             <div class="text-white">Best ao5 : <span class="text-custom-blue">18.89</span></div>
             <div class="text-white">solves : <span class="text-custom-blue">128</span></div>
         </div>
-        <div class="custom-gray-3 rounded-xl h-full w-hull flex items-center justify-center">
-            <table class="">
-                <tr>
-                    <th>Solve number</th>
-                    <th>Time</th>
-                    <th>gap to the mean</th>
+        <div class="bg-custom-gray-3 rounded-xl h-full w-hull flex items-center justify-center p-4 mx-2">
+            <table class="text-white customTable w-full">
+                <tr class="tableTr">
+                    <th class="tableTh">Solve number</th>
+                    <th class="tableTh">Time</th>
+                    <th class="tableTh">Gap to the mean</th>
+                    <th class="tableTh">Ao5</th>
                 </tr>
-                <tr>
-                    <td>1</td>
-                    <td>15.37</td>
-                    <td>-4.71</td>
+                <tr class="tableTr">
+                    <td class="tableTd">128</td>
+                    <td class="tableTd">15.37</td>
+                    <td class="tableTd text-red-500">+4.71</td>
+                    <td class="tableTd">18.89</td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>20.08</td>
-                    <td>-0.00</td>
+                <tr class="tableTr">
+                    <td class="tableTd">127</td>
+                    <td class="tableTd">20.08</td>
+                    <td class="tableTd text-green-400">-0.5</td>
+                    <td class="tableTd">20.08</td>
                 </tr>
-                <tr>
-                    <td>3</td>
-                    <td>18.89</td>
-                    <td>-1.19</td>
+                <tr class="tableTr">
+                    <td class="tableTd">126</td>
+                    <td class="tableTd">18.89</td>
+                    <td class="tableTd text-red-500">+1.19</td>
+                    <td class="tableTd">18.89</td>
                 </tr>
-                <tr>
-                    <td>4</td>
-                    <td>19.08</td>
-                    <td>+1.50</td>
+                <tr class="tableTr">
+                    <td class="tableTd">125</td>
+                    <td class="tableTd">19.08</td>
+                    <td class="tableTd text-green-400">-0.99</td>
+                    <td class="tableTd">18.89</td>
+                </tr>
+                <tr class="tableTr">
+                    <td class="tableTd">124</td>
+                    <td class="tableTd">18.89</td>
+                    <td class="tableTd text-green-400">-1.19</td>
+                    <td class="tableTd">18.89</td>
                 </tr>
             </table>
         </div>
-        <!-- >
-
-        -->
     </div>
 </div>
 

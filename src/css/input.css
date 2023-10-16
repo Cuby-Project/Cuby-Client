@@ -21,3 +21,20 @@
 .current-item {
     @apply rounded-xl;
 }
+
+.tableTr {
+    @apply hover:bg-custom-gray-0 hover:rounded-xl rounded-3xl
+    transition-all duration-300 ease-linear cursor-pointer shadow-lg text-center;
+}
+
+.tableTd {
+    @apply text-center border-custom-gray-1 border-2;
+}
+
+.tableTd:hover {
+    @apply bg-custom-gray-0;
+}
+
+.tableTh {
+    @apply border-custom-gray-1 border-2 font-medium    ;
+}
