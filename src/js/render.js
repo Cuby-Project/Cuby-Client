@@ -5,7 +5,7 @@ const buttonGenerate = document.querySelector('#regenerate');
 
 function refreshScramble() {
     api.generateScramble()
-        .then(data => { console.log(data);
+        .then(data => {
             const scramble = document.querySelector('#scramble');
             scramble.innerHTML = data;
         });

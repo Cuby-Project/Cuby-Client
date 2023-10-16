@@ -15,6 +15,9 @@ module.exports = {
             },
             screens: {
                 'hXL': {'raw': '(min-height: 970px)'}
+            },
+            fontFamily: {
+                "Montserrat": ['Montserrat', 'sans-serif']
             }
         },
     },
