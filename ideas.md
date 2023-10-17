@@ -3,3 +3,4 @@
 
 # fonctionnal ideas:
 - add a cube preview next to the scramble
+- add a fully customizable ui (colors, fonts, etc)

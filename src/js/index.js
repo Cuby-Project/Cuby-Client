@@ -77,3 +77,9 @@ ipcMain.handle('generateScramble', (event) => {
     return generateScramble();
 });
 
+app.whenReady()
+    .then(() => {
+        ipcMain.handle("getDeviceUserDataPath", () => {
+            return app.getPath("userData");
+        })
+    });

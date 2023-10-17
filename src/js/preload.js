@@ -15,3 +15,7 @@ const api = {
 };
 
 contextBridge.exposeInMainWorld("api", api);
+
+
+ipcRenderer.invoke("getDeviceUserDataPath")
+    .then(data => { console.log(data); });
