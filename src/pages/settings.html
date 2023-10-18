@@ -11,8 +11,8 @@
     <script defer src="../js/renderers/settingsRenderer.js"></script>
     <title>Cuby</title>
 </head>
-<body class="bg-custom-gray-0 dark:bg-yellow-500">
-<header id="titlebar">
+<body class="bg-white dark:bg-custom-gray-0">
+<header id="titlebar" class="fixed top-0 left-0 w-full p-0.5 border-b-0 bg-blue-100 dark:bg-custom-gray-2">
     <div class="draggable">
         <div class="controls">
             <button id="maximize" class="button maximize"></button>
@@ -21,7 +21,7 @@
         </div>
     </div>
 </header>
-<div class="fixed top-7 left-0 h-screen w-16 flex flex-col bg-custom-gray-2 shadow-lg">
+<div class="fixed top-7 left-0 h-screen w-16 flex flex-col bg-blue-100 dark:bg-custom-gray-2">
     <a href="index.html">
         <div class="side-bar-main group">
             <img src="../img/icon.png" alt="icon">
@@ -53,7 +53,10 @@
         </div>
     </a>
 </div>
-<button id="toggleDarkMode">sallut je veut changer le mode de couleur en pressant le boutton que suis</button>
+
+<div class="m-4">
+    <button id="toggleDarkMode" class="bg-custom-blue hover:scale-105 p-2 text-white rounded-2xl drop-shadow-lg"></button>
+</div>
 
 </body>
 </html>

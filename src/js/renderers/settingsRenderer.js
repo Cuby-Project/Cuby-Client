@@ -1,7 +1,29 @@
-let buttonDarkMode = document.querySelector('button#toggleDarkMode');
+let buttonTheme = document.querySelector('button#toggleDarkMode');
 
-function toggleDarkMode() {
-    document.querySelector("html").classList.toggle('dark');
+function changeTheme() {
+    appdata.getTheme().then(
+        (theme => {
+            document.querySelector("html").classList.toggle('dark');
+            if (theme === "dark") {
+                buttonTheme.innerHTML = "change to light Mode";
+            } else {
+                buttonTheme.innerHTML = "change to dark Mode";
+            }
+            appdata.changeTheme();
+        })
+    );
 }
 
-buttonDarkMode.addEventListener("click", toggleDarkMode);
+// Set theme on load of page
+appdata.getTheme().then(
+    (theme => {
+        if (theme === "dark") {
+            document.querySelector("html").classList.toggle('dark');
+            buttonTheme.innerHTML = "change to light Mode";
+        } else {
+            buttonTheme.innerHTML = "change to dark Mode";
+        }
+    }
+));
+
+buttonTheme.addEventListener("click", changeTheme);

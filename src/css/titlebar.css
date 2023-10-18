@@ -5,15 +5,6 @@ body {
     text-align: justify;
 }
 
-#titlebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 2px;
-    border-bottom: 0;
-    background: #282b30;
-}
 
 .draggable {
     padding: 2px;
@@ -48,9 +39,4 @@ body {
 
 .body {
     margin-top: 10px /* Set to the height of the #titlebar */
-}
-
-.title {
-    padding: 3px 30px 3px 10px;
-    color: #7AE582;
 }
