@@ -11,7 +11,7 @@
     <script defer src="../js/renderers/timerRenderer.js"></script>
     <title>Cuby</title>
 </head>
-<body class="bg-custom-gray-0">
+<body class="bg-white dark:bg-custom-gray-0">
 <header id="titlebar" class="fixed top-0 left-0 w-full p-0.5 border-b-0 bg-blue-100 dark:bg-custom-gray-2">
     <div class="draggable">
         <div class="controls">
@@ -21,7 +21,7 @@
         </div>
     </div>
 </header>
-<div class="fixed top-7 left-0 h-screen w-16 flex flex-col bg-custom-gray-2 shadow-lg">
+<div class="fixed top-7 left-0 h-screen w-16 flex flex-col bg-blue-100 dark:bg-custom-gray-2">
     <a href="index.html">
         <div class="side-bar-main">
             <img src="../img/icon.png" alt="icon">
@@ -55,23 +55,23 @@
 </div>
 
 <div class="flex flex-col justify-between h-[calc(100vh-35px)]">
-    <div class="flex place-content-between h-10 bg-custom-gray-2 shadow-lg p-2 m-3 rounded-xl">
+    <div class="flex place-content-between h-10 bg-blue-100 dark:bg-custom-gray-2 shadow-lg p-2 m-3 rounded-xl">
         <button id="regenerate" class="flex">
             <i class="fa-solid fa-rotate fa-xl pr-2 text-custom-blue"></i>
-            <div class="text-white">Regenerate</div>
+            <div class="dark:text-white">Regenerate</div>
         </button>
         <div class="flex">
-            <div id="scramble" class="text-white font-bold">
+            <div id="scramble" class="dark:text-white font-bold">
                 scramble
             </div>
             <button class="text-custom-blue group">
-                <i class="fa-solid fa-eye mx-3 text-2xl group-hover:scale-110 transition-all duration-100 ease-linear"></i>
+                <i class="fa-solid fa-eye mx-3 text-2xl group-hover:scale-110"></i>
             </button>
         </div>
 
         <div>
-            <label class="text-white" for="select-Scramble">cube : </label>
-            <select class="bg-custom-gray-2 text-white rounded-2xl border p-0.5 border-custom-blue" name="select-Scramble" id="select-Scramble">
+            <label class="dark:text-white" for="select-Scramble">cube : </label>
+            <select class="dark:bg-custom-gray-2 dark:text-white rounded-2xl border p-0.5 border-custom-blue" name="select-Scramble" id="select-Scramble">
                 <option value="3x3">3x3</option>
                 <option value="2x2">2x2</option>
                 <option value="4x4">4x4</option>
@@ -87,19 +87,19 @@
 
     </div>
     <div class="w-full flex justify-center items-center">
-        <div id="timer" class="text-white font-bold text-8xl xl:text-9xl">
+        <div id="timer" class="dark:text-white font-bold text-8xl xl:text-9xl">
             00:00:00
         </div>
     </div>
-    <div class="grid grid-rows-1 grid-cols-2 h-[25vh] bg-custom-gray-2 shadow-lg m-3 rounded-xl p-2">
-        <div class="bg-custom-gray-3 rounded-xl h-full w-hull flex flex-col items-center justify-center text-2xl mx-2">
-            <div class="text-white">Personal best : <span class="text-custom-blue">15.37</span></div>
-            <div class="text-white">Average : <span class="text-custom-blue">20.08</span></div>
-            <div class="text-white">Best ao5 : <span class="text-custom-blue">18.89</span></div>
-            <div class="text-white">solves : <span class="text-custom-blue">128</span></div>
+    <div class="grid grid-rows-1 grid-cols-2 h-[25vh] dark:bg-custom-gray-2 bg-blue-100 shadow-lg m-3 rounded-xl p-2">
+        <div class="dark:bg-custom-gray-3 bg-blue-200 rounded-xl h-full w-hull flex flex-col items-center justify-center text-2xl mx-2">
+            <div class="dark:text-white">Personal best : <span class="text-custom-blue">15.37</span></div>
+            <div class="dark:text-white">Average : <span class="text-custom-blue">20.08</span></div>
+            <div class="dark:text-white">Best ao5 : <span class="text-custom-blue">18.89</span></div>
+            <div class="dark:text-white">solves : <span class="text-custom-blue">128</span></div>
         </div>
-        <div class="bg-custom-gray-3 rounded-xl h-full w-hull flex items-center justify-center p-4 mx-2">
-            <table class="text-white customTable w-full">
+        <div class="dark:bg-custom-gray-3 bg-blue-200 rounded-xl h-full w-hull flex items-center justify-center p-4 mx-2">
+            <table class="dark:text-white w-full">
                 <tr class="tableTr">
                     <th class="tableTh">Solve number</th>
                     <th class="tableTh">Time</th>
@@ -115,7 +115,7 @@
                 <tr class="tableTr">
                     <td class="tableTd">127</td>
                     <td class="tableTd">20.08</td>
-                    <td class="tableTd text-green-400">-0.5</td>
+                    <td class="tableTd text-green-600">-0.5</td>
                     <td class="tableTd">20.08</td>
                 </tr>
                 <tr class="tableTr">
@@ -127,13 +127,13 @@
                 <tr class="tableTr">
                     <td class="tableTd">125</td>
                     <td class="tableTd">19.08</td>
-                    <td class="tableTd text-green-400">-0.99</td>
+                    <td class="tableTd text-green-600">-0.99</td>
                     <td class="tableTd">18.89</td>
                 </tr>
                 <tr class="tableTr">
                     <td class="tableTd">124</td>
                     <td class="tableTd">18.89</td>
-                    <td class="tableTd text-green-400">-1.19</td>
+                    <td class="tableTd text-green-600">-1.19</td>
                     <td class="tableTd">18.89</td>
                 </tr>
             </table>

@@ -10,12 +10,12 @@
 .side-bar-item {
     @apply relative flex items-center justify-center
     h-12 w-12 mt-2 mb-2 mx-auto hover:bg-custom-blue bg-white dark:bg-custom-gray-0 text-custom-blue hover:rounded-xl rounded-3xl
-    transition-all duration-300 ease-linear cursor-pointer shadow-lg;
+    cursor-pointer shadow-lg;
 }
 
 .side-bar-main {
     @apply relative flex items-center justify-center
-    h-12 w-12 mt-2 mb-2 mx-auto cursor-pointer hover:scale-90 transition-all duration-300 ease-linear shadow-none;
+    h-12 w-12 mt-2 mb-2 mx-auto cursor-pointer hover:scale-90 shadow-none;
 }
 
 .current-item {
@@ -23,18 +23,13 @@
 }
 
 .tableTr {
-    @apply dark:hover:bg-custom-gray-0 hover:bg-white  hover:rounded-xl rounded-3xl
-    transition-all duration-300 ease-linear cursor-pointer shadow-lg text-center;
+    @apply shadow-lg text-center;
 }
 
 .tableTd {
-    @apply text-center border-custom-gray-1 border-2;
-}
-
-.tableTd:hover {
-    @apply bg-custom-gray-0;
+    @apply text-center border-custom-gray-1 border-2 font-medium;
 }
 
 .tableTh {
-    @apply border-custom-gray-1 border-2 font-medium    ;
+    @apply border-custom-gray-1 border-2 font-bold;
 }
