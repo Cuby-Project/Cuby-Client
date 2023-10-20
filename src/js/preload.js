@@ -2,8 +2,6 @@ const { ipcRenderer, contextBridge } = require('electron');
 const fs = require('fs');
 const path = require("path");
 const fse = require("fs-extra")
-const {existsSync} = require("fs");
-
 
 const api = {
     closeWindow: () => {
@@ -76,4 +74,3 @@ appdata.appIsInitialized()
         }
         contextBridge.exposeInMainWorld("appdata", appdata);
     })
-

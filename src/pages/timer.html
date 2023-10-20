@@ -9,6 +9,7 @@
     <script defer src="../../node_modules/@fortawesome/fontawesome-free/js/fontawesome.js"></script>
     <script defer src="../js/renderers/render.js"></script>
     <script defer src="../js/renderers/timerRenderer.js"></script>
+    <script src="https://cdn.cubing.net/js/cubing/twisty" type="module"></script>
     <title>Cuby</title>
 </head>
 <body class="bg-white dark:bg-custom-gray-0">
@@ -53,7 +54,12 @@
         </div>
     </a>
 </div>
-
+<!-- a div that will be only display when the button #siplay scramble will be clicked  -->
+<!-- it contains the scramble preview -->
+<div  id="previewContainer"  class="hidden bg-blue-200 dark:bg-custom-gray-2 h-52 w-64 rounded-3xl p-2 left-2/3 top-24 fixed shadow-lg shadow-custom-blue">
+    <div class="w-full text-center dark:text-white">Drag the cube</div>
+    <div id="previewScramble"></div>
+</div>
 <div class="flex flex-col justify-between h-[calc(100vh-35px)]">
     <div class="flex place-content-between h-10 bg-blue-100 dark:bg-custom-gray-2 shadow-lg p-2 m-3 rounded-xl">
         <button id="regenerate" class="flex">
@@ -64,14 +70,12 @@
             <div id="scramble" class="dark:text-white font-bold">
                 scramble
             </div>
-            <button class="text-custom-blue group">
-                <i class="fa-solid fa-eye mx-3 text-2xl group-hover:scale-110"></i>
-            </button>
+            <button id="displayScramble" class="text-custom-blue group"><i  id="previewIcon" class="fa-solid fa-eye mx-3 text-2xl group-hover:scale-110"></i></button>
         </div>
 
         <div>
             <label class="dark:text-white" for="select-Scramble">cube : </label>
-            <select class="dark:bg-custom-gray-2 dark:text-white rounded-2xl border p-0.5 border-custom-blue" name="select-Scramble" id="select-Scramble">
+            <select id="selectCube" class="dark:bg-custom-gray-2 dark:text-white rounded-2xl border p-0.5 border-custom-blue" name="select-Scramble" id="select-Scramble">
                 <option value="3x3">3x3</option>
                 <option value="2x2">2x2</option>
                 <option value="4x4">4x4</option>

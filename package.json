@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.4.2",
+    "cubing": "^0.43.4",
     "fs": "^0.0.1-security",
     "fs-extra": "^11.1.1",
     "sr-puzzlegen": "^1.0.4",
