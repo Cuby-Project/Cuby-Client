@@ -1,10 +1,12 @@
 const buttonGenerate = document.querySelector('#regenerate');
 const buttonDisplayScramble = document.querySelector("#displayScramble");
-const previewIcon = document.querySelector("#previewIcon");
-const previewScramble = document.querySelector("#previewScramble");
 const scramble = document.querySelector('#scramble');
 const selectCube = document.querySelector('#selectCube');
+
+// previews items
 const previewContainer = document.querySelector('#previewContainer');
+const previewScramble = document.querySelector("#previewScramble");
+const previewIcon = document.querySelector("#previewIcon");
 
 const cubes = {
     "2x2": "2x2x2",
@@ -24,7 +26,7 @@ function refreshScramble() {
         .then(data => {
             scramble.innerHTML = data;
         });
-    //displayPreview()
+    // displayPreview()
 }
 
 function generatePreview(puzzle, alg) {
@@ -34,7 +36,7 @@ function generatePreview(puzzle, alg) {
     return preview;
 }
 
-function displayPreview() {
+function changeDisplay() {
     if (previewIcon.classList.contains("fa-eye")) {
         previewContainer.classList.remove("hidden");
         previewIcon.classList.replace("fa-eye", "fa-eye-slash");
@@ -42,10 +44,13 @@ function displayPreview() {
         previewContainer.classList.add("hidden");
         previewIcon.classList.replace("fa-eye-slash", "fa-eye");
     }
-    console.log(previewIcon.classList)
+}
+
+function displayPreview() {
     let alg = scramble.innerHTML;
     let puzzle = selectCube.value ;
     previewScramble.innerHTML = generatePreview(cubes[puzzle], alg);
+    changeDisplay();
 }
 
 buttonGenerate.addEventListener('click', refreshScramble)
@@ -53,3 +58,61 @@ refreshScramble();
 
 buttonDisplayScramble.addEventListener('click', displayPreview)
 selectCube.addEventListener("change", displayPreview)
+
+let isRunning = false;
+let time = 0;
+let timerInterval;
+let keyDownTime = 0;
+
+const timerDisplay = document.getElementById("timer");
+
+document.addEventListener("keydown", function(event) {
+    if (event.code === "Space") {
+        if (!isRunning) {
+            start();
+        } else {
+            stop();
+        }
+    }
+});
+
+function start() {
+    if (!isRunning) {
+        isRunning = true;
+        timerInterval = setInterval(updateTimer, 10);
+    }
+}
+
+function stop() {
+    if (isRunning) {
+        time = 0;
+        isRunning = false;
+        clearInterval(timerInterval);
+    }
+}
+
+function updateTimer() {
+    time ++;
+    // we diplay the time in this format : 00:00:00
+    let minutes = Math.floor(time / 100 / 60);
+    let seconds = Math.floor(time / 100);
+    let milliseconds = time % 100;
+
+    if (minutes < 10) {
+        minutes = "0" + minutes;
+    }
+
+    if (seconds >= 60) {
+        seconds = seconds % 60;
+    }
+
+    if (seconds < 10) {
+        seconds = "0" + seconds;
+    }
+
+    if (milliseconds < 10) {
+        milliseconds = "0" + milliseconds;
+    }
+
+    timerDisplay.innerHTML = minutes + ":" + seconds + ":" + milliseconds;
+}
