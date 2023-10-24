@@ -22,6 +22,10 @@ const cubes = {
 }
 
 function refreshScramble() {
+    // if the preview is displayed, we hide it
+    if (!previewContainer.classList.contains("hidden")) {
+        changeDisplay();
+    }
     api.generateScramble()
         .then(data => {
             scramble.innerHTML = data;
@@ -62,38 +66,72 @@ selectCube.addEventListener("change", displayPreview)
 let isRunning = false;
 let time = 0;
 let timerInterval;
-let keyDownTime = 0;
 
 const timerDisplay = document.getElementById("timer");
 
-document.addEventListener("keydown", function(event) {
-    if (event.code === "Space") {
-        if (!isRunning) {
-            start();
-        } else {
+let espaceEnfonce = false;
+let tempsDebut;
+let startAppelee = false;
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === ' ' && !espaceEnfonce) {
+        // Lorsque la barre d'espace est enfoncée pour la première fois, démarrez le chronomètre
+        tempsDebut = Date.now();
+        espaceEnfonce = true;
+        startAppelee = false; // Réinitialisez la variable startAppelee
+
+        // Si le chronomètre est déjà en cours, arrêtez-le
+        if (isRunning) {
             stop();
         }
     }
 });
 
-function start() {
-    if (!isRunning) {
-        isRunning = true;
-        timerInterval = setInterval(updateTimer, 10);
+document.addEventListener('keyup', (event) => {
+    if (event.key === ' ' && espaceEnfonce) {
+        // Lorsque la barre d'espace est relâchée, vérifiez la durée
+        const tempsMaintenu = Date.now() - tempsDebut;
+
+        if (tempsMaintenu >= 1000) {
+            if (!startAppelee) {
+                // Si la barre d'espace a été maintenue enfoncée pendant au moins une seconde et start n'a pas été appelée, appelez la fonction start
+                start();
+                startAppelee = true;
+            }
+        } else {
+            if (startAppelee) {
+                // Si la barre d'espace est relâchée après que start ait été appelée, appelez la fonction stop
+                stop();
+            }
+        }
+
+        // Réinitialisez les variables
+        espaceEnfonce = false;
+        tempsDebut = 0;
     }
+});
+
+function start() {
+    isRunning = true;
+    time = 0; // Réinitialisez le temps à zéro
+    timerDisplay.classList.remove("text-green-500");
+    timerDisplay.classList.remove("text-white");
+    timerDisplay.classList.add("text-red-500");
+    timerDisplay.innerHTML = "00:00:00"; // Réinitialisez l'affichage
+    timerInterval = setInterval(updateTimer, 10);
 }
 
 function stop() {
-    if (isRunning) {
-        time = 0;
-        isRunning = false;
-        clearInterval(timerInterval);
-    }
+    clearInterval(timerInterval);
+    isRunning = false;
+    timerDisplay.classList.remove("text-red-500");
+    timerDisplay.classList.remove("text-green-500");
+    timerDisplay.classList.add("text-white");
 }
 
 function updateTimer() {
-    time ++;
-    // we diplay the time in this format : 00:00:00
+    time++;
+    // we display the time in this format : 00:00:00
     let minutes = Math.floor(time / 100 / 60);
     let seconds = Math.floor(time / 100);
     let milliseconds = time % 100;
