@@ -69,69 +69,74 @@ let timerInterval;
 
 const timerDisplay = document.getElementById("timer");
 
-let espaceEnfonce = false;
-let tempsDebut;
-let startAppelee = false;
+let spacePressed = false;
+let startTime;
+let startCalled = false;
+
+function colorWaiter() {
+    timerDisplay.classList.add("text-red-500");
+    setTimeout(() => {
+        timerDisplay.classList.remove("text-red-500");
+        timerDisplay.classList.add("text-green-500");
+    }, 1000);
+}
 
 document.addEventListener('keydown', (event) => {
-    if (event.key === ' ' && !espaceEnfonce) {
-        // Lorsque la barre d'espace est enfoncée pour la première fois, démarrez le chronomètre
-        tempsDebut = Date.now();
-        espaceEnfonce = true;
-        startAppelee = false; // Réinitialisez la variable startAppelee
-
-        // Si le chronomètre est déjà en cours, arrêtez-le
+    if (event.key === ' ' && !spacePressed) {
+        // When the space bar is pressed for the first time, start the timer
+        startTime = Date.now();
+        spacePressed = true;
+        startCalled = false; // Reset the startCalled variable
+        // If the timer is already running, stop it
         if (isRunning) {
             stop();
+        } else {
+            colorWaiter();
         }
     }
 });
 
 document.addEventListener('keyup', (event) => {
-    if (event.key === ' ' && espaceEnfonce) {
-        // Lorsque la barre d'espace est relâchée, vérifiez la durée
-        const tempsMaintenu = Date.now() - tempsDebut;
+    if (event.key === ' ' && spacePressed) {
+        // When the space bar is released, check the duration
+        const timeHeld = Date.now() - startTime;
 
-        if (tempsMaintenu >= 1000) {
-            if (!startAppelee) {
-                // Si la barre d'espace a été maintenue enfoncée pendant au moins une seconde et start n'a pas été appelée, appelez la fonction start
+        if (timeHeld >= 1000) {
+            if (!startCalled) {
+                // If the space bar was held for at least one second and start hasn't been called, call the start function
                 start();
-                startAppelee = true;
+                timerDisplay.classList.remove("text-green-500");
+                timerDisplay.classList.remove("text-red-500");
+                startCalled = true;
             }
         } else {
-            if (startAppelee) {
-                // Si la barre d'espace est relâchée après que start ait été appelée, appelez la fonction stop
+            if (startCalled) {
+                // If the space bar is released after start has been called, call the stop function
                 stop();
             }
         }
 
-        // Réinitialisez les variables
-        espaceEnfonce = false;
-        tempsDebut = 0;
+        // Reset the variables
+        spacePressed = false;
+        startTime = 0;
     }
 });
 
 function start() {
     isRunning = true;
-    time = 0; // Réinitialisez le temps à zéro
-    timerDisplay.classList.remove("text-green-500");
-    timerDisplay.classList.remove("text-white");
-    timerDisplay.classList.add("text-red-500");
-    timerDisplay.innerHTML = "00:00:00"; // Réinitialisez l'affichage
+    time = 0; // Reset the time to zero
+    timerDisplay.innerHTML = "00:00:00"; // Reset the display
     timerInterval = setInterval(updateTimer, 10);
 }
 
 function stop() {
     clearInterval(timerInterval);
     isRunning = false;
-    timerDisplay.classList.remove("text-red-500");
-    timerDisplay.classList.remove("text-green-500");
-    timerDisplay.classList.add("text-white");
 }
 
 function updateTimer() {
     time++;
-    // we display the time in this format : 00:00:00
+    // We display the time in this format: 00:00:00
     let minutes = Math.floor(time / 100 / 60);
     let seconds = Math.floor(time / 100);
     let milliseconds = time % 100;
