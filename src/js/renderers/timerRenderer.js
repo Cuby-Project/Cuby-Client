@@ -72,12 +72,17 @@ const timerDisplay = document.getElementById("timer");
 let spacePressed = false;
 let startTime;
 let startCalled = false;
+let releasedTooEarly = false;
 
 function colorWaiter() {
     timerDisplay.classList.add("text-red-500");
     setTimeout(() => {
         timerDisplay.classList.remove("text-red-500");
-        timerDisplay.classList.add("text-green-500");
+        if (!releasedTooEarly) {
+            timerDisplay.classList.add("text-green-500");
+        } else {
+            releasedTooEarly = false;
+        }
     }, 1000);
 }
 
@@ -110,6 +115,9 @@ document.addEventListener('keyup', (event) => {
                 startCalled = true;
             }
         } else {
+            console.log("released too early");
+            releasedTooEarly = true;
+            startCalled = false;
             if (startCalled) {
                 // If the space bar is released after start has been called, call the stop function
                 stop();
