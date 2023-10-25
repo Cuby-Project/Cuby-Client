@@ -69,13 +69,53 @@ const appdata = {
 
 const timeAPI = {
 
-    startTime() {
+    /**
+     * returns a moment instance
+     * @returns {*|moment.Moment}
+     */
+    now() {
         return moment();
     },
 
-    getDuration(start) {
-        let duration = moment().diff(start);
+    /**
+     * returns the formatted time between now and the param time
+     * @returns {string}
+     * @param duration (milliseconds)
+     */
+    formatDuration(duration) {
         return moment(duration).format("mm:ss,SS");
+    },
+
+    /**
+     * returns the  time between now and the param time in milliseconds
+     * @param start
+     * @returns {string}
+     */
+    getDuration(start) {
+        return moment().diff(start);
+    },
+
+    /**
+     * this function save in the json the time
+     * @param time
+     * @param cube
+     * @param scramble
+     */
+    registertime(time, cube, scramble) {
+        ipcRenderer.invoke("getDeviceUserDataPath")
+            .then(data => {
+                    let solvesPath = path.join(data, "cubyData/solves.json");
+                    let now = this.now()
+                    let solve = {
+                        "date": now,
+                        "time": time,
+                        "scramble": scramble,
+                        "cube": cube
+                    }
+                    let content = fs.readFileSync(solvesPath, {encoding: "utf8"});
+                    let parsedContent = JSON.parse(content);
+                }
+            );
     }
 }
 

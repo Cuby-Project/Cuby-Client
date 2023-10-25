@@ -8,6 +8,10 @@ const previewContainer = document.querySelector('#previewContainer');
 const previewScramble = document.querySelector("#previewScramble");
 const previewIcon = document.querySelector("#previewIcon");
 
+// tumer items
+const timerDisplay = document.getElementById("timer");
+
+
 const cubes = {
     "2x2": "2x2x2",
     "3x3": "3x3x3",
@@ -30,7 +34,10 @@ function refreshScramble() {
         .then(data => {
             scramble.innerHTML = data;
         });
-    // displayPreview()
+}
+
+function getScramble() {
+    return scramble.innerHTML;
 }
 
 function generatePreview(puzzle, alg) {
@@ -64,13 +71,11 @@ buttonDisplayScramble.addEventListener('click', displayPreview)
 selectCube.addEventListener("change", displayPreview)
 
 
-
-const timerDisplay = document.getElementById("timer");
-let isRunning = false;
 let time = 0;
 let timerInterval;
-let spacePressed = false;
 let startTime;
+let spacePressed = false;
+let isRunning = false;
 let startCalled = false;
 let releasedTooEarly = false;
 let timerStart;
@@ -80,7 +85,6 @@ function colorWaiter() {
     setTimeout(() => {
         timerDisplay.classList.remove("text-red-500");
         if (!releasedTooEarly) {
-            console.log("add green")
             timerDisplay.classList.add("text-green-500");
         } else {
             releasedTooEarly = false;
@@ -134,17 +138,21 @@ document.addEventListener('keyup', (event) => {
 
 function start() {
     isRunning = true;
-    time = 0; // Reset the time to zero
-    timerDisplay.innerHTML = "00:00.00"; // Reset the display
-    timerStart = timeAPI.startTime();
+    timerDisplay.innerHTML = "00:00,00"; // Reset the display
+    timerStart = timeAPI.now();
     timerInterval = setInterval(updateTimer, 10);
 }
+
+function updateTimer() {
+    timerDisplay.innerHTML = timeAPI.formatDuration(timeAPI.getDuration(timerStart));
+}
+
 
 function stop() {
     clearInterval(timerInterval);
     isRunning = false;
-}
+    refreshScramble(); // when we stop the timer, a new scramble is proposed
 
-function updateTimer() {
-    timerDisplay.innerHTML = timeAPI.getDuration(timerStart);
+    time = timeAPI.getDuration(timerStart);
+    timeAPI.registertime(time, cubes[selectCube.value], getScramble())
 }
