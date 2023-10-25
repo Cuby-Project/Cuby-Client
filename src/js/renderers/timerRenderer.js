@@ -63,22 +63,24 @@ refreshScramble();
 buttonDisplayScramble.addEventListener('click', displayPreview)
 selectCube.addEventListener("change", displayPreview)
 
+
+
+const timerDisplay = document.getElementById("timer");
 let isRunning = false;
 let time = 0;
 let timerInterval;
-
-const timerDisplay = document.getElementById("timer");
-
 let spacePressed = false;
 let startTime;
 let startCalled = false;
 let releasedTooEarly = false;
+let timerStart;
 
 function colorWaiter() {
     timerDisplay.classList.add("text-red-500");
     setTimeout(() => {
         timerDisplay.classList.remove("text-red-500");
         if (!releasedTooEarly) {
+            console.log("add green")
             timerDisplay.classList.add("text-green-500");
         } else {
             releasedTooEarly = false;
@@ -92,6 +94,7 @@ document.addEventListener('keydown', (event) => {
         startTime = Date.now();
         spacePressed = true;
         startCalled = false; // Reset the startCalled variable
+        releasedTooEarly = false;
         // If the timer is already running, stop it
         if (isRunning) {
             stop();
@@ -115,7 +118,6 @@ document.addEventListener('keyup', (event) => {
                 startCalled = true;
             }
         } else {
-            console.log("released too early");
             releasedTooEarly = true;
             startCalled = false;
             if (startCalled) {
@@ -133,7 +135,8 @@ document.addEventListener('keyup', (event) => {
 function start() {
     isRunning = true;
     time = 0; // Reset the time to zero
-    timerDisplay.innerHTML = "00:00:00"; // Reset the display
+    timerDisplay.innerHTML = "00:00.00"; // Reset the display
+    timerStart = timeAPI.startTime();
     timerInterval = setInterval(updateTimer, 10);
 }
 
@@ -143,27 +146,5 @@ function stop() {
 }
 
 function updateTimer() {
-    time++;
-    // We display the time in this format: 00:00:00
-    let minutes = Math.floor(time / 100 / 60);
-    let seconds = Math.floor(time / 100);
-    let milliseconds = time % 100;
-
-    if (minutes < 10) {
-        minutes = "0" + minutes;
-    }
-
-    if (seconds >= 60) {
-        seconds = seconds % 60;
-    }
-
-    if (seconds < 10) {
-        seconds = "0" + seconds;
-    }
-
-    if (milliseconds < 10) {
-        milliseconds = "0" + milliseconds;
-    }
-
-    timerDisplay.innerHTML = minutes + ":" + seconds + ":" + milliseconds;
+    timerDisplay.innerHTML = timeAPI.getDuration(timerStart);
 }

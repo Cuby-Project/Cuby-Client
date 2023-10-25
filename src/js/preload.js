@@ -2,6 +2,7 @@ const { ipcRenderer, contextBridge } = require('electron');
 const fs = require('fs');
 const path = require("path");
 const fse = require("fs-extra")
+const moment = require("moment");
 
 const api = {
     closeWindow: () => {
@@ -65,6 +66,20 @@ const appdata = {
         });
     }
 }
+
+const timeAPI = {
+
+    startTime() {
+        return moment();
+    },
+
+    getDuration(start) {
+        let duration = moment().diff(start);
+        return moment(duration).format("mm:ss,SS");
+    }
+}
+
+contextBridge.exposeInMainWorld("timeAPI", timeAPI);
 
 appdata.appIsInitialized()
     .then(data => {
