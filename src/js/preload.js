@@ -101,11 +101,11 @@ const timeAPI = {
      * @param cube
      * @param scramble
      */
-    registertime(time, cube, scramble) {
+    registerTime(time, cube, scramble) {
         ipcRenderer.invoke("getDeviceUserDataPath")
             .then(data => {
                     let solvesPath = path.join(data, "cubyData/solves.json");
-                    let now = this.now()
+                    let now = moment().format("DD/MM/YYYY");
                     let solve = {
                         "date": now,
                         "time": time,
@@ -114,12 +114,110 @@ const timeAPI = {
                     }
                     let content = fs.readFileSync(solvesPath, {encoding: "utf8"});
                     let parsedContent = JSON.parse(content);
+                    let solvesTable = parsedContent.solves;
+                    solvesTable.push(solve);
+                    fs.writeFileSync(solvesPath, JSON.stringify(parsedContent));
                 }
             );
     }
 }
 
-contextBridge.exposeInMainWorld("timeAPI", timeAPI);
+const solvesDataAPI = {
+
+    /**
+     * get all the solves
+     */
+    getSolves() {
+        let p = new Promise((resolve, reject) => {
+            ipcRenderer.invoke("getDeviceUserDataPath")
+                .then(data => {
+                        let solvesPath = path.join(data, "cubyData/solves.json");
+                        let content = fs.readFileSync(solvesPath);
+                        let solves = JSON.parse(content).solves;
+                        resolve(solves);
+                    }
+                );
+        });
+        return p.then(data => {
+            return data;
+        });
+    },
+
+    /**
+     * get the average of the all the solves of the cube param
+     */
+    getAverage(cube) {
+        let p = new Promise((resolve, reject) => {
+            let solves = solvesDataAPI.getSolves()
+                .then(solves => {
+                    let sum = 0;
+                    let solvesOfCube = solves.filter(solve => solve.cube === cube);
+                    solvesOfCube.forEach(solve => {
+                        sum += solve.time;
+                    });
+                    let average = sum / solvesOfCube.length;
+                    resolve(average);
+                });
+        });
+        return p.then(data => {
+            return data;
+        });
+    },
+
+    getNbSolve() {
+        let p = new Promise((resolve, reject) => {
+            let solves = solvesDataAPI.getSolves()
+                .then(solves => {
+                    resolve(solves.length);
+                });
+        });
+        return p.then(data => {
+            return data;
+        });
+    },
+
+    /**
+     * get the number of solves of the cube param
+     */
+    getCubeNbSolves(cube) {
+        let p = new Promise((resolve, reject) => {
+            let solves = solvesDataAPI.getSolves()
+                .then(solves => {
+                    let solvesOfCube = solves.filter(solve => solve.cube === cube);
+                    resolve(solvesOfCube.length);
+                });
+        });
+        return p.then(data => {
+            return data;
+        });
+    },
+
+    /**
+     * get the best solve of the cube param
+     */
+    getBestSolve(cube) {
+        let p = new Promise((resolve, reject) => {
+            let solves = solvesDataAPI.getSolves()
+                .then(solves => {
+                    let bestSolve = 0;
+                    let solvesOfCube = solves.filter(solve => solve.cube === cube);
+                    solvesOfCube.forEach(solve => {
+                        if (solve.time < bestSolve || bestSolve === 0) {
+                            bestSolve = solve.time;
+                        }
+                    });
+                    resolve(bestSolve);
+                });
+        });
+        return p.then(data => {
+            return data;
+        });
+    },
+
+
+}
+
+
 
 appdata.appIsInitialized()
     .then(data => {
@@ -128,4 +226,6 @@ appdata.appIsInitialized()
             appdata.initialize();
         }
         contextBridge.exposeInMainWorld("appdata", appdata);
+        contextBridge.exposeInMainWorld("timeAPI", timeAPI);
+        contextBridge.exposeInMainWorld("solvesDataAPI", solvesDataAPI);
     })

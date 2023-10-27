@@ -47,21 +47,11 @@ function generatePreview(puzzle, alg) {
     return preview;
 }
 
-function changeDisplay() {
-    if (previewIcon.classList.contains("fa-eye")) {
-        previewContainer.classList.remove("hidden");
-        previewIcon.classList.replace("fa-eye", "fa-eye-slash");
-    } else {
-        previewContainer.classList.add("hidden");
-        previewIcon.classList.replace("fa-eye-slash", "fa-eye");
-    }
-}
 
 function displayPreview() {
     let alg = scramble.innerHTML;
     let puzzle = selectCube.value ;
     previewScramble.innerHTML = generatePreview(cubes[puzzle], alg);
-    changeDisplay();
 }
 
 buttonGenerate.addEventListener('click', refreshScramble)
@@ -141,7 +131,7 @@ function start() {
     timerDisplay.innerHTML = "00:00,00"; // Reset the display
     timerStart = timeAPI.now();
     timerInterval = setInterval(updateTimer, 10);
-}
+}   
 
 function updateTimer() {
     timerDisplay.innerHTML = timeAPI.formatDuration(timeAPI.getDuration(timerStart));
@@ -154,5 +144,48 @@ function stop() {
     refreshScramble(); // when we stop the timer, a new scramble is proposed
 
     time = timeAPI.getDuration(timerStart);
-    timeAPI.registertime(time, cubes[selectCube.value], getScramble())
+    timeAPI.registerTime(time, cubes[selectCube.value], getScramble())
+    refreshStatistics();
 }
+
+// statistics at the bottom of the page :
+
+function displayAverage() {
+    solvesDataAPI.getAverage(cubes[selectCube.value])
+        .then(data => {
+            if (isNaN(data) || data === 0) {
+                document.querySelector("#average").innerHTML = "No solve yet";
+                return;
+            }
+            document.querySelector("#average").innerHTML = timeAPI.formatDuration(data);
+        });
+}
+
+function displayBest() {
+    solvesDataAPI.getBestSolve(cubes[selectCube.value])
+        .then(data => {
+            if (data === 0) {
+                document.querySelector("#best").innerHTML = "No solve yet";
+                return;
+            }
+            document.querySelector("#best").innerHTML = timeAPI.formatDuration(data);
+        });
+}
+
+
+function displaySolveNumber() {
+    solvesDataAPI.getCubeNbSolves(cubes[selectCube.value])
+        .then(data => {
+            document.querySelector("#solveNumber").innerHTML = data;
+        });
+}
+
+function refreshStatistics() {
+    displayAverage();
+    displayBest();
+    displaySolveNumber();
+}
+
+refreshStatistics();
+
+selectCube.addEventListener("change", refreshStatistics)
