@@ -55,7 +55,33 @@
 </div>
 
 <div class="m-4">
-    <button id="toggleDarkMode" class="bg-custom-blue hover:scale-105 p-2 text-white rounded-2xl drop-shadow-lg"></button>
+    <div class="dark:text-white text-3xl p-5">Customize the app style</div>
+    <div class="dark:bg-custom-gray-2 mb-3 rounded-3xl bg-blue-100">
+        <div class="flex p-3 m-5 items-center">
+            <div class="text-2xl dark:text-white">Change color theme : </div>
+            <button id="toggleDarkMode" class="bg-custom-blue hover:scale-105 text-white mx-6 p-2 rounded-2xl drop-shadow-lg"></button>
+        </div>
+        <div class="flex p-3 m-5 items-center">
+            <!-- TODO: add color picker to change the app color -->
+            <label for="color" class="dark:text-white text-2xl">Customize the app color : </label>
+            <input class="rounded-2xl dark:bg-custom-gray-2 mx-6 hover:cursor-pointer" type="color" name="color" id="color" value="#009FFD">
+            <button class="bg-custom-blue hover:scale-105 text-white mx-3 p-2 rounded-2xl drop-shadow-lg">reset color</button>
+        </div>
+    </div>
+    <div class="dark:text-white text-3xl p-5">Customize the time input method</div>
+    <div class="dark:bg-custom-gray-2 mb-3 rounded-3xl bg-blue-100">
+        <div class="flex p-3 m-5 items-center">
+            <div class="text-2xl dark:text-white">Change the time input method : </div>
+            <!-- add radio for keybord input and buld-in timer -->
+            <div class="mx-6">
+                <input type="radio" name="keyboardInput" id="keyboardInput" value="keyboard">
+                <label for="keyboardInput" class="dark:text-white text-2xl">manual keyboard input</label><br>
+                <input type="radio" name="timerInput" id="timerInput" value="timer" checked>
+                <label for="timerInput" class="dark:text-white text-2xl">built-in timer</label>
+
+            </div>
+        </div>
+    </div>
 </div>
 
 </body>
