@@ -275,7 +275,6 @@ const solvesDataAPI = {
 
 }
 
-
 const openWindowApi = {
     openUrl: (url) => {
         shell.openExternal(url)
