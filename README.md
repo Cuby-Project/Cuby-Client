@@ -1,7 +1,7 @@
 <div align="center">
 <img src="src/img/icon.png" width="150" height="173" alt="logo">
 
-# Cuby
+# Cuby (work in progress)
 
 ---
 
@@ -27,9 +27,10 @@ An electorn js app who contains everything you need for rublicks, it includes a 
 - Tailwindcss
 - Node js
 
-## Installation
 
+## contributors: 
 
+- Odonata971
 
 ---
 ## Version: v1
