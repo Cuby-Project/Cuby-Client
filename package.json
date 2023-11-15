@@ -29,6 +29,7 @@
     "cubing": "^0.43.4",
     "fs": "^0.0.1-security",
     "fs-extra": "^11.1.1",
+    "shell": "^0.5.1",
     "moment": "^2.29.4",
     "sr-puzzlegen": "^1.0.4",
     "tailwindcss-typography": "^3.1.0"

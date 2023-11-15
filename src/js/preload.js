@@ -2,6 +2,7 @@ const {ipcRenderer, contextBridge} = require('electron');
 const fs = require('fs');
 const path = require("path");
 const fse = require("fs-extra")
+const { shell } = require('electron');
 const moment = require("moment");
 
 const api = {
@@ -274,6 +275,14 @@ const solvesDataAPI = {
 
 }
 
+
+const openWindowApi = {
+    openUrl: (url) => {
+        shell.openExternal(url)
+    }
+}
+
+contextBridge.exposeInMainWorld("openWindowApi", openWindowApi);
 
 appdata.appIsInitialized()
     .then(data => {
