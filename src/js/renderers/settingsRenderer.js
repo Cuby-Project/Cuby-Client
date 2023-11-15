@@ -1,5 +1,6 @@
 let buttonTheme = document.querySelector('button#toggleDarkMode');
 
+
 function changeTheme() {
     appdata.getTheme().then(
         (theme => {
@@ -29,3 +30,7 @@ appdata.getTheme().then(
 ));
 
 buttonTheme.addEventListener("click", changeTheme);
+
+document.querySelector('#github').addEventListener('click', () => {
+    openWindowApi.openUrl('https://github.com/quentinformatique/Cuby');
+});
