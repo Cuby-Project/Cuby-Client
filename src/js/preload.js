@@ -1,7 +1,8 @@
-const { ipcRenderer, contextBridge } = require('electron');
+const {ipcRenderer, contextBridge} = require('electron');
 const fs = require('fs');
 const path = require("path");
 const fse = require("fs-extra")
+const moment = require("moment");
 const { shell } = require('electron');
 
 const api = {
@@ -22,7 +23,7 @@ const api = {
 contextBridge.exposeInMainWorld("api", api);
 
 const appdata = {
-    initialize(){
+    initialize() {
         ipcRenderer.invoke("getDeviceUserDataPath")
             .then(appData => {
                 let pathSource = path.join(__dirname, "../backup");
@@ -37,15 +38,15 @@ const appdata = {
     changeTheme() {
         ipcRenderer.invoke("getDeviceUserDataPath")
             .then(data => {
-                let themePath = path.join(data, "cubyData/theme.json");
-                let content = fs.readFileSync(themePath);
-                let theme = JSON.parse(content);
-                if (theme.theme === "dark") {
-                    theme.theme = "light";
-                } else {
-                    theme.theme = "dark";
-                }
-                fs.writeFileSync(themePath, JSON.stringify(theme))
+                    let themePath = path.join(data, "cubyData/theme.json");
+                    let content = fs.readFileSync(themePath);
+                    let theme = JSON.parse(content);
+                    if (theme.theme === "dark") {
+                        theme.theme = "light";
+                    } else {
+                        theme.theme = "dark";
+                    }
+                    fs.writeFileSync(themePath, JSON.stringify(theme))
                 }
             );
     },
@@ -67,14 +68,6 @@ const appdata = {
     }
 }
 
-const openWindowApi = {
-    openUrl: (url) => {
-        shell.openExternal(url)
-    }
-}
-
-contextBridge.exposeInMainWorld("openWindowApi", openWindowApi);
-
 appdata.appIsInitialized()
     .then(data => {
         let state = fs.existsSync(path.join(data, "cubyData"));
@@ -82,4 +75,6 @@ appdata.appIsInitialized()
             appdata.initialize();
         }
         contextBridge.exposeInMainWorld("appdata", appdata);
+        contextBridge.exposeInMainWorld("timeAPI", timeAPI);
+        contextBridge.exposeInMainWorld("solvesDataAPI", solvesDataAPI);
     })

@@ -57,7 +57,7 @@
 <!-- a div that will be only display when the button #siplay scramble will be clicked  -->
 <!-- it contains the scramble preview -->
 <div  id="previewContainer"  class="hidden bg-blue-200 dark:bg-custom-gray-2 h-52 w-64 rounded-3xl p-2 left-2/3 top-24 fixed shadow-lg shadow-custom-blue">
-    <div class="w-full text-center dark:text-white">Drag the cube</div>
+    <div class="w-full text-center dark:text-white">Rotate the cube</div>
     <div id="previewScramble"></div>
 </div>
 <div class="flex flex-col justify-between h-[calc(100vh-35px)]">
@@ -92,54 +92,18 @@
     </div>
     <div class="w-full flex justify-center items-center">
         <div class="dark:text-white font-bold text-8xl xl:text-9xl">
-            <p id="timer">00:00:00</p>
+            <p id="timer">00:00,00</p>
         </div>
     </div>
     <div class="grid grid-rows-1 grid-cols-2 h-[25vh] dark:bg-custom-gray-2 bg-blue-100 shadow-lg m-3 rounded-xl p-2">
         <div class="dark:bg-custom-gray-3 bg-blue-200 rounded-xl h-full w-hull flex flex-col items-center justify-center text-2xl mx-2">
-            <div class="dark:text-white">Personal best : <span class="text-custom-blue">15.37</span></div>
-            <div class="dark:text-white">Average : <span class="text-custom-blue">20.08</span></div>
-            <div class="dark:text-white">Best ao5 : <span class="text-custom-blue">18.89</span></div>
-            <div class="dark:text-white">solves : <span class="text-custom-blue">128</span></div>
+            <div class="dark:text-white">Personal best : <span id="best" class="text-custom-blue"></span></div>
+            <div class="dark:text-white">Average : <span id="average" class="text-custom-blue"></span></div>
+            <div class="dark:text-white">solves : <span id="solveNumber" class="text-custom-blue"></span></div>
         </div>
         <div class="dark:bg-custom-gray-3 bg-blue-200 rounded-xl h-full w-hull flex items-center justify-center p-4 mx-2">
-            <table class="dark:text-white w-full">
-                <tr class="tableTr">
-                    <th class="tableTh">Solve number</th>
-                    <th class="tableTh">Time</th>
-                    <th class="tableTh">Gap to the mean</th>
-                    <th class="tableTh">Ao5</th>
-                </tr>
-                <tr class="tableTr">
-                    <td class="tableTd">128</td>
-                    <td class="tableTd">15.37</td>
-                    <td class="tableTd text-red-500">+4.71</td>
-                    <td class="tableTd">18.89</td>
-                </tr>
-                <tr class="tableTr">
-                    <td class="tableTd">127</td>
-                    <td class="tableTd">20.08</td>
-                    <td class="tableTd text-green-600">-0.5</td>
-                    <td class="tableTd">20.08</td>
-                </tr>
-                <tr class="tableTr">
-                    <td class="tableTd">126</td>
-                    <td class="tableTd">18.89</td>
-                    <td class="tableTd text-red-500">+1.19</td>
-                    <td class="tableTd">18.89</td>
-                </tr>
-                <tr class="tableTr">
-                    <td class="tableTd">125</td>
-                    <td class="tableTd">19.08</td>
-                    <td class="tableTd text-green-600">-0.99</td>
-                    <td class="tableTd">18.89</td>
-                </tr>
-                <tr class="tableTr">
-                    <td class="tableTd">124</td>
-                    <td class="tableTd">18.89</td>
-                    <td class="tableTd text-green-600">-1.19</td>
-                    <td class="tableTd">18.89</td>
-                </tr>
+            <table class="dark:text-white w-full" id="solvesHistory">
+
             </table>
         </div>
     </div>

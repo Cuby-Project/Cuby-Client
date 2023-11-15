@@ -8,6 +8,10 @@ const previewContainer = document.querySelector('#previewContainer');
 const previewScramble = document.querySelector("#previewScramble");
 const previewIcon = document.querySelector("#previewIcon");
 
+// tumer items
+const timerDisplay = document.getElementById("timer");
+
+
 const cubes = {
     "2x2": "2x2x2",
     "3x3": "3x3x3",
@@ -30,7 +34,10 @@ function refreshScramble() {
         .then(data => {
             scramble.innerHTML = data;
         });
-    // displayPreview()
+}
+
+function getScramble() {
+    return scramble.innerHTML;
 }
 
 function generatePreview(puzzle, alg) {
@@ -40,21 +47,11 @@ function generatePreview(puzzle, alg) {
     return preview;
 }
 
-function changeDisplay() {
-    if (previewIcon.classList.contains("fa-eye")) {
-        previewContainer.classList.remove("hidden");
-        previewIcon.classList.replace("fa-eye", "fa-eye-slash");
-    } else {
-        previewContainer.classList.add("hidden");
-        previewIcon.classList.replace("fa-eye-slash", "fa-eye");
-    }
-}
 
 function displayPreview() {
     let alg = scramble.innerHTML;
-    let puzzle = selectCube.value ;
+    let puzzle = selectCube.value;
     previewScramble.innerHTML = generatePreview(cubes[puzzle], alg);
-    changeDisplay();
 }
 
 buttonGenerate.addEventListener('click', refreshScramble)
@@ -63,16 +60,15 @@ refreshScramble();
 buttonDisplayScramble.addEventListener('click', displayPreview)
 selectCube.addEventListener("change", displayPreview)
 
-let isRunning = false;
+
 let time = 0;
 let timerInterval;
-
-const timerDisplay = document.getElementById("timer");
-
-let spacePressed = false;
 let startTime;
+let spacePressed = false;
+let isRunning = false;
 let startCalled = false;
 let releasedTooEarly = false;
+let timerStart;
 
 function colorWaiter() {
     timerDisplay.classList.add("text-red-500");
@@ -92,6 +88,7 @@ document.addEventListener('keydown', (event) => {
         startTime = Date.now();
         spacePressed = true;
         startCalled = false; // Reset the startCalled variable
+        releasedTooEarly = false;
         // If the timer is already running, stop it
         if (isRunning) {
             stop();
@@ -115,12 +112,12 @@ document.addEventListener('keyup', (event) => {
                 startCalled = true;
             }
         } else {
-            console.log("released too early");
             releasedTooEarly = true;
             startCalled = false;
             if (startCalled) {
                 // If the space bar is released after start has been called, call the stop function
                 stop();
+                refreshStatistics();
             }
         }
 
@@ -132,38 +129,93 @@ document.addEventListener('keyup', (event) => {
 
 function start() {
     isRunning = true;
-    time = 0; // Reset the time to zero
-    timerDisplay.innerHTML = "00:00:00"; // Reset the display
+    timerDisplay.innerHTML = "00:00,00"; // Reset the display
+    timerStart = timeAPI.now();
     timerInterval = setInterval(updateTimer, 10);
 }
+
+function updateTimer() {
+    timerDisplay.innerHTML = timeAPI.formatDuration(timeAPI.getDuration(timerStart));
+}
+
 
 function stop() {
     clearInterval(timerInterval);
     isRunning = false;
+    refreshScramble(); // when we stop the timer, a new scramble is proposed
+
+    time = timeAPI.getDuration(timerStart);
+    timeAPI.registerTime(time, cubes[selectCube.value], getScramble());
+    refreshStatistics();
 }
 
-function updateTimer() {
-    time++;
-    // We display the time in this format: 00:00:00
-    let minutes = Math.floor(time / 100 / 60);
-    let seconds = Math.floor(time / 100);
-    let milliseconds = time % 100;
+// statistics at the bottom of the page :
 
-    if (minutes < 10) {
-        minutes = "0" + minutes;
-    }
-
-    if (seconds >= 60) {
-        seconds = seconds % 60;
-    }
-
-    if (seconds < 10) {
-        seconds = "0" + seconds;
-    }
-
-    if (milliseconds < 10) {
-        milliseconds = "0" + milliseconds;
-    }
-
-    timerDisplay.innerHTML = minutes + ":" + seconds + ":" + milliseconds;
+function displayAverage() {
+    solvesDataAPI.getAverage(cubes[selectCube.value])
+        .then(data => {
+            if (isNaN(data) || data === 0) {
+                document.querySelector("#average").innerHTML = "No solve yet";
+                return;
+            }
+            document.querySelector("#average").innerHTML = timeAPI.formatDuration(data);
+        });
 }
+
+function displayBest() {
+    solvesDataAPI.getBestSolve(cubes[selectCube.value])
+        .then(data => {
+            if (data === 0) {
+                document.querySelector("#best").innerHTML = "No solve yet";
+                return;
+            }
+            document.querySelector("#best").innerHTML = timeAPI.formatDuration(data);
+        });
+}
+
+
+function displaySolveNumber() {
+    solvesDataAPI.getCubeNbSolves(cubes[selectCube.value])
+        .then(data => {
+            document.querySelector("#solveNumber").innerHTML = data;
+        });
+}
+
+function refreshStatistics() {
+    displayAverage();
+    displayBest();
+    displaySolveNumber();
+    displaySolvesHistory()
+}
+
+selectCube.addEventListener("change", refreshStatistics)
+
+// display the solves history in a table
+
+function displaySolvesHistory() {
+    solvesDataAPI.getCubeSolves(cubes[selectCube.value])
+        .then(data => {
+            let table = document.querySelector("#solvesHistory");
+            table.innerHTML = "<tr class='tableTr'><th class='tableTh'>Solve number</th><th class='tableTh'>Time</th><th class='tableTh'>Gap to average</th><th class='tableTh'>Edit</th></tr>";
+
+            // we only keep the last 5 solves,
+            //let last5solves = data.slice(data.length - 5).reverse();
+            let last5Solves = data.length >= 5
+                ? data.reverse().slice(0  , 5)
+                : data.reverse();
+
+            last5Solves.forEach(solve => {
+                let row = document.createElement("tr");
+                row.classList.add("tableTr");
+                row.innerHTML = "<td class='tableTd'>" + solve.solveNumber + "</td>";
+                row.innerHTML += "<td class='tableTd'>" + timeAPI.formatDuration(solve.time) + "</td>";
+                row.innerHTML += "<td class='tableTd'>" + timeAPI.formatDuration(solve.time) + "</td>";
+                row.innerHTML += "<td class='tableTd'><a href='/editSolve/" + solve.id + "'><i class='fas fa-edit text-custom-blue'></i></a></td>";
+
+                table.appendChild(row);
+            });
+        });
+}
+
+// we refresh the statistics every 0.5 seconds
+setInterval(refreshStatistics, 500);
