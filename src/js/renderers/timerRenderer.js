@@ -50,7 +50,7 @@ function generatePreview(puzzle, alg) {
 
 function displayPreview() {
     let alg = scramble.innerHTML;
-    let puzzle = selectCube.value ;
+    let puzzle = selectCube.value;
     previewScramble.innerHTML = generatePreview(cubes[puzzle], alg);
 }
 
@@ -117,6 +117,7 @@ document.addEventListener('keyup', (event) => {
             if (startCalled) {
                 // If the space bar is released after start has been called, call the stop function
                 stop();
+                refreshStatistics();
             }
         }
 
@@ -131,7 +132,7 @@ function start() {
     timerDisplay.innerHTML = "00:00,00"; // Reset the display
     timerStart = timeAPI.now();
     timerInterval = setInterval(updateTimer, 10);
-}   
+}
 
 function updateTimer() {
     timerDisplay.innerHTML = timeAPI.formatDuration(timeAPI.getDuration(timerStart));
@@ -144,7 +145,7 @@ function stop() {
     refreshScramble(); // when we stop the timer, a new scramble is proposed
 
     time = timeAPI.getDuration(timerStart);
-    timeAPI.registerTime(time, cubes[selectCube.value], getScramble())
+    timeAPI.registerTime(time, cubes[selectCube.value], getScramble());
     refreshStatistics();
 }
 
@@ -184,8 +185,37 @@ function refreshStatistics() {
     displayAverage();
     displayBest();
     displaySolveNumber();
+    displaySolvesHistory()
 }
 
-refreshStatistics();
-
 selectCube.addEventListener("change", refreshStatistics)
+
+// display the solves history in a table
+
+function displaySolvesHistory() {
+    solvesDataAPI.getCubeSolves(cubes[selectCube.value])
+        .then(data => {
+            let table = document.querySelector("#solvesHistory");
+            table.innerHTML = "<tr class='tableTr'><th class='tableTh'>Solve number</th><th class='tableTh'>Time</th><th class='tableTh'>Gap to average</th><th class='tableTh'>Edit</th></tr>";
+
+            // we only keep the last 5 solves,
+            //let last5solves = data.slice(data.length - 5).reverse();
+            let last5Solves = data.length >= 5
+                ? data.reverse().slice(0  , 5)
+                : data.reverse();
+
+            last5Solves.forEach(solve => {
+                let row = document.createElement("tr");
+                row.classList.add("tableTr");
+                row.innerHTML = "<td class='tableTd'>" + solve.solveNumber + "</td>";
+                row.innerHTML += "<td class='tableTd'>" + timeAPI.formatDuration(solve.time) + "</td>";
+                row.innerHTML += "<td class='tableTd'>" + timeAPI.formatDuration(solve.time) + "</td>";
+                row.innerHTML += "<td class='tableTd'><a href='/editSolve/" + solve.id + "'><i class='fas fa-edit text-custom-blue'></i></a></td>";
+
+                table.appendChild(row);
+            });
+        });
+}
+
+// we refresh the statistics every 0.5 seconds
+setInterval(refreshStatistics, 500);

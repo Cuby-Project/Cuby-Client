@@ -1,4 +1,4 @@
-const { ipcRenderer, contextBridge } = require('electron');
+const {ipcRenderer, contextBridge} = require('electron');
 const fs = require('fs');
 const path = require("path");
 const fse = require("fs-extra")
@@ -22,7 +22,7 @@ const api = {
 contextBridge.exposeInMainWorld("api", api);
 
 const appdata = {
-    initialize(){
+    initialize() {
         ipcRenderer.invoke("getDeviceUserDataPath")
             .then(appData => {
                 let pathSource = path.join(__dirname, "../backup");
@@ -37,15 +37,15 @@ const appdata = {
     changeTheme() {
         ipcRenderer.invoke("getDeviceUserDataPath")
             .then(data => {
-                let themePath = path.join(data, "cubyData/theme.json");
-                let content = fs.readFileSync(themePath);
-                let theme = JSON.parse(content);
-                if (theme.theme === "dark") {
-                    theme.theme = "light";
-                } else {
-                    theme.theme = "dark";
-                }
-                fs.writeFileSync(themePath, JSON.stringify(theme))
+                    let themePath = path.join(data, "cubyData/theme.json");
+                    let content = fs.readFileSync(themePath);
+                    let theme = JSON.parse(content);
+                    if (theme.theme === "dark") {
+                        theme.theme = "light";
+                    } else {
+                        theme.theme = "dark";
+                    }
+                    fs.writeFileSync(themePath, JSON.stringify(theme))
                 }
             );
     },
@@ -105,18 +105,28 @@ const timeAPI = {
         ipcRenderer.invoke("getDeviceUserDataPath")
             .then(data => {
                     let solvesPath = path.join(data, "cubyData/solves.json");
-                    let now = moment().format("DD/MM/YYYY");
-                    let solve = {
-                        "date": now,
-                        "time": time,
-                        "scramble": scramble,
-                        "cube": cube
-                    }
                     let content = fs.readFileSync(solvesPath, {encoding: "utf8"});
                     let parsedContent = JSON.parse(content);
                     let solvesTable = parsedContent.solves;
-                    solvesTable.push(solve);
-                    fs.writeFileSync(solvesPath, JSON.stringify(parsedContent));
+
+                    let now = moment().format("DD/MM/YYYY");
+
+                    solvesDataAPI.getCubeSolves(cube)
+                        .then(data => {
+                            let solveNumber = data.length + 1;
+                            // the id is the solve number
+                            let solve = {
+                                date: now,
+                                time: time,
+                                scramble: scramble,
+                                cube,
+                                solveNumber,
+                            }
+
+                            solvesTable.push(solve);
+
+                            fs.writeFileSync(solvesPath, JSON.stringify(parsedContent));
+                        });
                 }
             );
     }
@@ -176,6 +186,28 @@ const solvesDataAPI = {
         });
     },
 
+    /*
+     * get solves from a specific cube
+     */
+
+    getCubeSolves(cube) {
+        let p = new Promise((resolve, reject) => {
+            let solves = solvesDataAPI.getSolves()
+                .then(solves => {
+                    let solvesOfCube = [];
+                    for (let i = 0; i < solves.length; i++) {
+                        if (solves[i].cube === cube) {
+                            solvesOfCube[i] = solves[i];
+                        }
+                    }
+                    resolve(solvesOfCube);
+                });
+        });
+        return p.then(data => {
+            return data;
+        });
+    },
+
     /**
      * get the number of solves of the cube param
      */
@@ -214,9 +246,33 @@ const solvesDataAPI = {
         });
     },
 
+    /*
+     * delete a solve from its id
+     */
+    deleteSolve(id) {
+        let p = new Promise((resolve, reject) => {
+            let solves = solvesDataAPI.getSolves()
+                .then(solves => {
+                    let solvesWithoutDeleted = solves.filter(solve => solve.id !== id);
+                    let solvesData = {
+                        "solves": solvesWithoutDeleted
+                    }
+                    ipcRenderer.invoke("getDeviceUserDataPath")
+                        .then(data => {
+                                let solvesPath = path.join(data, "cubyData/solves.json");
+                                fs.writeFileSync(solvesPath, JSON.stringify(solvesData));
+                                resolve();
+                            }
+                        );
+                });
+        });
+        return p.then(data => {
+            return data;
+        });
+    },
+
 
 }
-
 
 
 appdata.appIsInitialized()
