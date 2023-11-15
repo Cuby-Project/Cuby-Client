@@ -55,8 +55,53 @@
 </div>
 
 <div class="m-4">
-    <button id="toggleDarkMode" class="bg-custom-blue hover:scale-105 p-2 text-white rounded-2xl drop-shadow-lg"></button>
-</div>
+    <div class="dark:text-white text-3xl ml-1 font-medium">Customize the app style</div>
+    <div class="dark:bg-custom-gray-2 rounded-3xl bg-blue-100">
+        <div class="flex p-3 m-2 items-center">
+            <div class="text-2xl dark:text-white">Change color theme : </div>
+            <button id="toggleDarkMode" class="bg-custom-blue hover:scale-105 text-white mx-6 p-2 rounded-2xl drop-shadow-lg"></button>
+        </div>
+        <div class="flex p-3 m-2 items-center">
+            <label for="color" class="dark:text-white text-2xl">Customize the app color : </label>
+            <input class="rounded-2xl dark:bg-custom-gray-2 mx-6 hover:cursor-pointer" type="color" name="color" id="color" value="#009FFD">
+            <button class="bg-custom-blue hover:scale-105 text-white mx-3 p-2 rounded-2xl drop-shadow-lg">reset color</button>
+        </div>
+    </div>
+    <div class="dark:text-white text-3xl mt-10 ml-1 font-medium">Customize the time input method</div>
+    <div class="dark:bg-custom-gray-2 my-2 rounded-3xl bg-blue-100">
+        <div class="flex p-3 items-center">
+            <div class="text-2xl dark:text-white">Change the time input method : </div>
+            <div class="mx-6">
+                <input type="radio" name="keyboardInput" id="keyboardInput" value="keyboard">
+                <label for="keyboardInput" class="dark:text-white text-2xl">manual keyboard input</label><br>
+                <input type="radio" name="timerInput" id="timerInput" value="timer" checked>
+                <label for="timerInput" class="dark:text-white text-2xl">built-in timer</label>
 
+            </div>
+        </div>
+    </div>
+    <div class="dark:text-white text-3xl mt-10 ml-1 font-medium">Other informations</div>
+    <div class="dark:bg-custom-gray-2 my-2 rounded-3xl bg-blue-100">
+        <div class="flex p-3 items-center">
+            <div class="text-2xl dark:text-white">Github repository : </div>
+            <button class="mx-6 text-custom-blue hover:underline" id="github">
+                <i class="fab fa-github fa-2x"></i>
+            </button>
+        </div>
+        <div class="flex p-3 items-center place-content-between">
+            <div class="text-2xl dark:text-white flex items-center">
+                created by : <div class="text-custom-blue text-xl mx-3">Quentin Costes</div>
+            </div>
+            <div class="mx-6 flex place-content-between">
+                <div class="text-2xl dark:text-white"> contact : </div>
+                <div class="mx-6 text-custom-blue text-xl">
+                    <a href="mailto:quentin.costes@iut-rodez.fr">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
