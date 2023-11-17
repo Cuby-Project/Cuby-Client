@@ -69,15 +69,6 @@ const appdata = {
     }
 }
 
-<<<<<<<<< Temporary merge branch 1
-const openWindowApi = {
-    openUrl: (url) => {
-        shell.openExternal(url)
-    }
-}
-
-contextBridge.exposeInMainWorld("openWindowApi", openWindowApi);
-=========
 const timeAPI = {
 
     /**
@@ -285,7 +276,6 @@ const solvesDataAPI = {
 
 }
 
->>>>>>>>> Temporary merge branch 2
 
 appdata.appIsInitialized()
     .then(data => {
