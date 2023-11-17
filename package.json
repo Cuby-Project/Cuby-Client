@@ -31,7 +31,7 @@
     "fs-extra": "^11.1.1",
     "shell": "^0.5.1",
     "moment": "^2.29.4",
-
+    "shell": "^0.5.1",
     "sr-puzzlegen": "^1.0.4",
     "tailwindcss-typography": "^3.1.0"
   },

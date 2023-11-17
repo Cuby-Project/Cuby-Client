@@ -4,6 +4,7 @@ const path = require("path");
 const fse = require("fs-extra")
 const { shell } = require('electron');
 const moment = require("moment");
+const { shell } = require('electron');
 
 const api = {
     closeWindow: () => {
@@ -84,15 +85,7 @@ const timeAPI = {
      * @param duration (milliseconds)
      */
     formatDuration(duration) {
-        if (duration === 0) {
-            return "DNF";
-        }
-
-        if (duration >= 0) {
-            return moment(duration).format("mm:ss,SS");
-        } else {
-            return moment(duration).format("-mm:ss,SS");
-        }
+        return moment(duration).format("mm:ss,SS");
     },
 
     /**
@@ -110,7 +103,7 @@ const timeAPI = {
      * @param cube
      * @param scramble
      */
-    registerTime(time, cube, scramble, callback = () => {}) {
+    registerTime(time, cube, scramble) {
         ipcRenderer.invoke("getDeviceUserDataPath")
             .then(data => {
                     let solvesPath = path.join(data, "cubyData/solves.json");
@@ -134,7 +127,7 @@ const timeAPI = {
 
                             solvesTable.push(solve);
 
-                            fs.writeFile(solvesPath, JSON.stringify(parsedContent), callback);
+                            fs.writeFileSync(solvesPath, JSON.stringify(parsedContent));
                         });
                 }
             );
@@ -283,13 +276,6 @@ const solvesDataAPI = {
 
 }
 
-const openWindowApi = {
-    openUrl: (url) => {
-        shell.openExternal(url)
-    }
-}
-
-contextBridge.exposeInMainWorld("openWindowApi", openWindowApi);
 
 appdata.appIsInitialized()
     .then(data => {
