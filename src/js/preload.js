@@ -102,7 +102,7 @@ const timeAPI = {
      * @param cube
      * @param scramble
      */
-    registerTime(time, cube, scramble) {
+    registerTime(time, cube, scramble, callback = () => {}) {
         ipcRenderer.invoke("getDeviceUserDataPath")
             .then(data => {
                     let solvesPath = path.join(data, "cubyData/solves.json");
@@ -126,7 +126,7 @@ const timeAPI = {
 
                             solvesTable.push(solve);
 
-                            fs.writeFileSync(solvesPath, JSON.stringify(parsedContent));
+                            fs.writeFile(solvesPath, JSON.stringify(parsedContent), callback);
                         });
                 }
             );

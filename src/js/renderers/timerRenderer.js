@@ -145,8 +145,7 @@ function stop() {
     refreshScramble(); // when we stop the timer, a new scramble is proposed
 
     time = timeAPI.getDuration(timerStart);
-    timeAPI.registerTime(time, cubes[selectCube.value], getScramble());
-    refreshStatistics();
+    timeAPI.registerTime(time, cubes[selectCube.value], getScramble(), refreshStatistics);
 }
 
 // statistics at the bottom of the page :
@@ -217,5 +216,4 @@ function displaySolvesHistory() {
         });
 }
 
-// we refresh the statistics every 0.5 seconds
-setInterval(refreshStatistics, 500);
+refreshStatistics();
