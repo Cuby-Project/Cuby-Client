@@ -23,7 +23,7 @@
 }
 
 .tableTr {
-    @apply shadow-lg text-center;
+    @apply text-center;
 }
 
 .tableTd {
