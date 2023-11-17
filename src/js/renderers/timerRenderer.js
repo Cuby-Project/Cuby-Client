@@ -59,7 +59,7 @@ function changeDisplay() {
 
 function displayPreview() {
     let alg = scramble.innerHTML;
-    let puzzle = selectCube.value ;
+    let puzzle = selectCube.value;
     previewScramble.innerHTML = generatePreview(cubes[puzzle], alg);
     changeDisplay();
 }
@@ -155,8 +155,6 @@ function updateTimer() {
 }
 
 
-
-
 function stop() {
     clearInterval(timerInterval);
     isRunning = false;
@@ -222,9 +220,8 @@ function displaySolvesHistory() {
             table.innerHTML = "<tr class='tableTr'><th class='tableTh'>Solve number</th><th class='tableTh'>Time</th><th class='tableTh'>Gap to average</th><th class='tableTh'>Edit</th></tr>";
 
             // we only keep the last 5 solves,
-            //let last5solves = data.slice(data.length - 5).reverse();
             let last5Solves = data.length >= 5
-                ? data.reverse().slice(0  , 5)
+                ? data.reverse().slice(0, 5)
                 : data.reverse();
 
             last5Solves.forEach(solve => {
