@@ -47,12 +47,28 @@ function generatePreview(puzzle, alg) {
     return preview;
 }
 
+function changeDisplay() {
+    if (previewIcon.classList.contains("fa-eye")) {
+        previewContainer.classList.remove("hidden");
+        previewIcon.classList.replace("fa-eye", "fa-eye-slash");
+    } else {
+        previewContainer.classList.add("hidden");
+        previewIcon.classList.replace("fa-eye-slash", "fa-eye");
+    }
+}
 
 function displayPreview() {
     let alg = scramble.innerHTML;
-    let puzzle = selectCube.value;
+    let puzzle = selectCube.value ;
     previewScramble.innerHTML = generatePreview(cubes[puzzle], alg);
+    changeDisplay();
 }
+
+buttonGenerate.addEventListener('click', refreshScramble)
+refreshScramble();
+
+buttonDisplayScramble.addEventListener('click', displayPreview)
+selectCube.addEventListener("change", displayPreview)
 
 buttonGenerate.addEventListener('click', refreshScramble)
 refreshScramble();
@@ -139,6 +155,8 @@ function updateTimer() {
 }
 
 
+
+
 function stop() {
     clearInterval(timerInterval);
     isRunning = false;
@@ -194,6 +212,12 @@ selectCube.addEventListener("change", refreshStatistics)
 function displaySolvesHistory() {
     solvesDataAPI.getCubeSolves(cubes[selectCube.value])
         .then(data => {
+            let average = 0;
+            for (let i = 0; i < data.length; i++) {
+                average += data[i].time;
+            }
+            average = average / data.length;
+
             let table = document.querySelector("#solvesHistory");
             table.innerHTML = "<tr class='tableTr'><th class='tableTh'>Solve number</th><th class='tableTh'>Time</th><th class='tableTh'>Gap to average</th><th class='tableTh'>Edit</th></tr>";
 
@@ -205,10 +229,25 @@ function displaySolvesHistory() {
 
             last5Solves.forEach(solve => {
                 let row = document.createElement("tr");
+                let negative = false;
+                // calculate the gap to average
+                let gapToAverage;
+                if (solve.time > average) {
+                    gapToAverage = solve.time - average;
+                    negative = true;
+                } else {
+                    gapToAverage = average - solve.time;
+                }
+                console.log(gapToAverage)
+
                 row.classList.add("tableTr");
                 row.innerHTML = "<td class='tableTd'>" + solve.solveNumber + "</td>";
                 row.innerHTML += "<td class='tableTd'>" + timeAPI.formatDuration(solve.time) + "</td>";
-                row.innerHTML += "<td class='tableTd'>" + timeAPI.formatDuration(solve.time) + "</td>";
+                if (negative) {
+                    row.innerHTML += "<td class='tableTd text-red-500'>+ " + timeAPI.formatDuration(gapToAverage) + "</td>";
+                } else {
+                    row.innerHTML += "<td class='tableTd text-green-500'>- " + timeAPI.formatDuration(gapToAverage) + "</td>";
+                }
                 row.innerHTML += "<td class='tableTd'><a href='/editSolve/" + solve.id + "'><i class='fas fa-edit text-custom-blue'></i></a></td>";
 
                 table.appendChild(row);

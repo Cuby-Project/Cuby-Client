@@ -84,7 +84,15 @@ const timeAPI = {
      * @param duration (milliseconds)
      */
     formatDuration(duration) {
-        return moment(duration).format("mm:ss,SS");
+        if (duration === 0) {
+            return "DNF";
+        }
+
+        if (duration >= 0) {
+            return moment(duration).format("mm:ss,SS");
+        } else {
+            return moment(duration).format("-mm:ss,SS");
+        }
     },
 
     /**
