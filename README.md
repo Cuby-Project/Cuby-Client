@@ -3,12 +3,15 @@
 # Cuby
 
 ---
-</div>
 
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
+
+<img src="https://img.shields.io/github/stars/quentinformatique/Cuby.svg">
+<img src="https://img.shields.io/github/forks/quentinformatique/Cuby.svg">
+<img src="https://img.shields.io/github/issues/quentinformatique/Cuby.svg">
+<img src="https://img.shields.io/github/languages/code-size/quentinformatique/Cuby.svg">
+<img src="https://img.shields.io/github/last-commit/quentinformatique/Cuby.svg">
+
+</div>
 
 **Cuby** a ElectronJS app for *Rubik's Cubes*, it contains everithing you need to solve, time, learn and explore Rubik's Cubes.  I created this app using electronJS, it's still in development for now but can already use it, read the installation tutorial if you want to give it a try.
 
