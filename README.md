@@ -4,11 +4,12 @@
 
 ---
 </div>
-
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
 **Cuby** a ElectronJS app for *Rubik's Cubes*, it contains everithing you need to solve, time, learn and explore Rubik's Cubes.  I created this app using electronJS, it's still in development for now but can already use it, read the installation tutorial if you want to give it a try.
 
