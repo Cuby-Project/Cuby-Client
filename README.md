@@ -40,7 +40,7 @@ if you want to try the app, folow this steps:
 1. clone or fork this repositorie
 2. run the folowing commands at the root folder:
     - ```npm install```
-    - ```run start```
+    - ```npm run start```
 
 ## Contributing
 
