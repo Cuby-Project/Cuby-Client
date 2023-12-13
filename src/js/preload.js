@@ -4,6 +4,8 @@ const path = require("path");
 const fse = require("fs-extra")
 const { shell } = require('electron');
 const moment = require("moment");
+const { Chart, LineController, LineElement, PointElement, LinearScale, Title, CategoryScale} = require('chart.js');
+Chart.register(LineController, LineElement, PointElement, LinearScale, Title, CategoryScale);
 
 const api = {
     closeWindow: () => {
@@ -19,8 +21,6 @@ const api = {
         return await ipcRenderer.invoke("generateScramble");
     }
 };
-
-contextBridge.exposeInMainWorld("api", api);
 
 const appdata = {
     initialize() {
@@ -289,7 +289,36 @@ const openWindowApi = {
     }
 }
 
-contextBridge.exposeInMainWorld("openWindowApi", openWindowApi);
+const chartAPI = {
+    getChart: (cube, element) => {
+        let solves = solvesDataAPI.getCubeSolves(cube).then(data => {
+            let chart = new Chart(element, {
+                type: 'line',
+                data: {
+                        labels: data.map(solve => solve.solveNumber),
+                    datasets: [{
+                        label: 'Solves for ' + cube,
+                        data: data.map(solve => solve.time),
+                        borderColor: '#009FFD',
+                        fill: false,
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            ticks: {
+                                callback: function(value, index, values) {
+                                    return timeAPI.formatDuration(value);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    }
+}
 
 appdata.appIsInitialized()
     .then(data => {
@@ -297,7 +326,10 @@ appdata.appIsInitialized()
         if (!state) {
             appdata.initialize();
         }
+        contextBridge.exposeInMainWorld("api", api);
+        contextBridge.exposeInMainWorld("openWindowApi", openWindowApi);
         contextBridge.exposeInMainWorld("appdata", appdata);
         contextBridge.exposeInMainWorld("timeAPI", timeAPI);
         contextBridge.exposeInMainWorld("solvesDataAPI", solvesDataAPI);
+        contextBridge.exposeInMainWorld("chartAPI", chartAPI);
     })
