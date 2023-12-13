@@ -310,8 +310,32 @@ const chartAPI = {
                             ticks: {
                                 callback: function(value, index, values) {
                                     return timeAPI.formatDuration(value);
+                                },
+                                color: 'white',
+                                font: {
+                                    size: 14,
                                 }
                             }
+                        },
+                        x: {
+                            ticks: {
+                                color: 'white',
+                                font: {
+                                    size: 14,
+                                }
+                            }
+                        }
+                    },
+                    elements: {
+                        point: {
+                            radius: 4,
+                            backgroundColor: '#009FFD',
+                            hoverRadius: 5,
+                            hoverBorderWidth: 2,
+                            hoverBackgroundColor: '#009FFD',
+                            hitRadius: 5,
+                            borderWidth: 2,
+                            borderColor: '#009FFD',
                         }
                     }
                 }

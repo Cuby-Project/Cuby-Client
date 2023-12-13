@@ -3,3 +3,9 @@ function changeChart(cube) {
 }
 
 changeChart("3x3x3");
+
+/*
+document.getElementById('cube').addEventListener('change', function () {
+    changeChart(this.value);
+});
+*/
