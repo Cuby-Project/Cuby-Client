@@ -40,6 +40,7 @@ if you want to try the app, folow this steps:
 1. clone or fork this repositorie
 2. run the folowing commands at the root folder:
     - ```npm install```
+    - ```npx tailwindcss -i ./src/css/input.css -o ./src/css/tailwind/output.css --watch```
     - ```npm run start```
 
 ## Contributing
