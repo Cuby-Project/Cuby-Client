@@ -5,4 +5,4 @@
 # functional ideas:
 - add a cube preview next to the scramble --> DONE
 - add a fully customizable ui (colors, fonts, etc) --> theme DONE
-- let the user chose in the settings how does he wants to input the time (timer, manual input, etc)
+- let the user chose in the settings how does he wants to input the time (timer, manual input, etc) --> UI DONE
