@@ -235,7 +235,6 @@ function displaySolvesHistory() {
                 } else {
                     gapToAverage = average - solve.time;
                 }
-                console.log(gapToAverage)
 
                 row.classList.add("tableTr");
                 row.innerHTML = "<td class='tableTd'>" + solve.solveNumber + "</td>";

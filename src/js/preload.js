@@ -4,7 +4,9 @@ const path = require("path");
 const fse = require("fs-extra")
 const { shell } = require('electron');
 const moment = require("moment");
+const axios = require('axios');
 const { Chart, LineController, LineElement, PointElement, LinearScale, Title, CategoryScale} = require('chart.js');
+const url = require("url");
 Chart.register(LineController, LineElement, PointElement, LinearScale, Title, CategoryScale);
 
 const api = {
@@ -29,6 +31,7 @@ const appdata = {
                 let pathSource = path.join(__dirname, "../backup");
                 fse.copySync(pathSource, appData);
             });
+
     },
 
     async appIsInitialized() {
@@ -344,6 +347,7 @@ const chartAPI = {
     }
 }
 
+
 appdata.appIsInitialized()
     .then(data => {
         let state = fs.existsSync(path.join(data, "cubyData"));
@@ -356,4 +360,5 @@ appdata.appIsInitialized()
         contextBridge.exposeInMainWorld("timeAPI", timeAPI);
         contextBridge.exposeInMainWorld("solvesDataAPI", solvesDataAPI);
         contextBridge.exposeInMainWorld("chartAPI", chartAPI);
+
     })
