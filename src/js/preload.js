@@ -2,11 +2,9 @@ const {ipcRenderer, contextBridge} = require('electron');
 const fs = require('fs');
 const path = require("path");
 const fse = require("fs-extra")
-const { shell } = require('electron');
+const {shell} = require('electron');
 const moment = require("moment");
-const axios = require('axios');
-const { Chart, LineController, LineElement, PointElement, LinearScale, Title, CategoryScale} = require('chart.js');
-const url = require("url");
+const {Chart, LineController, LineElement, PointElement, LinearScale, Title, CategoryScale} = require('chart.js');
 Chart.register(LineController, LineElement, PointElement, LinearScale, Title, CategoryScale);
 
 const api = {
@@ -62,10 +60,11 @@ const timeAPI = {
         return moment().diff(start);
     },
 
-    registerTime(time, cube, scramble, callback = () => {}) {
+    registerTime(time, cube, scramble, callback = () => {
+    }) {
         ipcRenderer.invoke("getDeviceUserDataPath").then((data) => {
             const solvesPath = path.join(data, "cubyData/solves.json");
-            const content = fs.readFileSync(solvesPath, { encoding: "utf8" });
+            const content = fs.readFileSync(solvesPath, {encoding: "utf8"});
             const parsedContent = JSON.parse(content);
             const solvesTable = parsedContent.solves;
             const now = moment().format("DD/MM/YYYY");
@@ -134,7 +133,7 @@ const solvesDataAPI = {
     async deleteSolve(id) {
         const solves = await solvesDataAPI.getSolves();
         const solvesWithoutDeleted = solves.filter((solve) => solve.id !== id);
-        const solvesData = { solves: solvesWithoutDeleted };
+        const solvesData = {solves: solvesWithoutDeleted};
 
         const data = await ipcRenderer.invoke("getDeviceUserDataPath");
         const solvesPath = path.join(data, "cubyData/solves.json");
