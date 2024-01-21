@@ -10,28 +10,18 @@ const url = require("url");
 Chart.register(LineController, LineElement, PointElement, LinearScale, Title, CategoryScale);
 
 const api = {
-    closeWindow: () => {
-        ipcRenderer.invoke("closeWindow");
-    },
-    maximizeWindow: () => {
-        ipcRenderer.invoke("maximizeWindow");
-    },
-    minimizeWindow: () => {
-        ipcRenderer.invoke("minimizeWindow");
-    },
-    generateScramble: async () => {
-        return await ipcRenderer.invoke("generateScramble");
-    }
+    closeWindow: () => ipcRenderer.invoke("closeWindow"),
+    maximizeWindow: () => ipcRenderer.invoke("maximizeWindow"),
+    minimizeWindow: () => ipcRenderer.invoke("minimizeWindow"),
+    generateScramble: async () => await ipcRenderer.invoke("generateScramble"),
 };
 
 const appdata = {
     initialize() {
-        ipcRenderer.invoke("getDeviceUserDataPath")
-            .then(appData => {
-                let pathSource = path.join(__dirname, "../backup");
-                fse.copySync(pathSource, appData);
-            });
-
+        ipcRenderer.invoke("getDeviceUserDataPath").then((appData) => {
+            const pathSource = path.join(__dirname, "../backup");
+            fse.copySync(pathSource, appData);
+        });
     },
 
     async appIsInitialized() {
@@ -39,326 +29,196 @@ const appdata = {
     },
 
     changeTheme() {
-        ipcRenderer.invoke("getDeviceUserDataPath")
-            .then(data => {
-                    let themePath = path.join(data, "cubyData/theme.json");
-                    let content = fs.readFileSync(themePath);
-                    let theme = JSON.parse(content);
-                    if (theme.theme === "dark") {
-                        theme.theme = "light";
-                    } else {
-                        theme.theme = "dark";
-                    }
-                    fs.writeFileSync(themePath, JSON.stringify(theme))
-                }
-            );
+        ipcRenderer.invoke("getDeviceUserDataPath").then((data) => {
+            const themePath = path.join(data, "cubyData/theme.json");
+            const content = fs.readFileSync(themePath);
+            const theme = JSON.parse(content);
+            theme.theme = theme.theme === "dark" ? "light" : "dark";
+            fs.writeFileSync(themePath, JSON.stringify(theme));
+        });
     },
 
-    getTheme() {
-        let p = new Promise((resolve, reject) => {
-            ipcRenderer.invoke("getDeviceUserDataPath")
-                .then(data => {
-                        let Themepath = path.join(data, "cubyData/theme.json");
-                        let content = fs.readFileSync(Themepath);
-                        let theme = JSON.parse(content).theme;
-                        resolve(theme);
-                    }
-                );
-        });
-        return p.then(data => {
-            return data;
-        });
-    }
-}
+    async getTheme() {
+        const data = await ipcRenderer.invoke("getDeviceUserDataPath");
+        const themePath = path.join(data, "cubyData/theme.json");
+        const content = fs.readFileSync(themePath);
+        return JSON.parse(content).theme;
+    },
+};
 
 const timeAPI = {
+    now: () => moment(),
 
-    /**
-     * returns a moment instance
-     * @returns {*|moment.Moment}
-     */
-    now() {
-        return moment();
-    },
-
-    /**
-     * returns the formatted time between now and the param time
-     * @returns {string}
-     * @param duration (milliseconds)
-     */
     formatDuration(duration) {
         if (duration === 0) {
             return "DNF";
         }
-
-        if (duration >= 0) {
-            return moment(duration).format("mm:ss,SS");
-        } else {
-            return moment(duration).format("-mm:ss,SS");
-        }
+        return duration >= 0
+            ? moment(duration).format("mm:ss,SS")
+            : moment(duration).format("-mm:ss,SS");
     },
 
-    /**
-     * returns the  time between now and the param time in milliseconds
-     * @param start
-     * @returns {string}
-     */
     getDuration(start) {
         return moment().diff(start);
     },
 
-    /**
-     * this function save in the json the time
-     * @param time
-     * @param cube
-     * @param scramble
-     */
     registerTime(time, cube, scramble, callback = () => {}) {
-        ipcRenderer.invoke("getDeviceUserDataPath")
-            .then(data => {
-                    let solvesPath = path.join(data, "cubyData/solves.json");
-                    let content = fs.readFileSync(solvesPath, {encoding: "utf8"});
-                    let parsedContent = JSON.parse(content);
-                    let solvesTable = parsedContent.solves;
+        ipcRenderer.invoke("getDeviceUserDataPath").then((data) => {
+            const solvesPath = path.join(data, "cubyData/solves.json");
+            const content = fs.readFileSync(solvesPath, { encoding: "utf8" });
+            const parsedContent = JSON.parse(content);
+            const solvesTable = parsedContent.solves;
+            const now = moment().format("DD/MM/YYYY");
 
-                    let now = moment().format("DD/MM/YYYY");
+            solvesDataAPI.getCubeSolves(cube).then((data) => {
+                const solveNumber = data.length + 1;
+                const solve = {
+                    date: now,
+                    time: time,
+                    scramble: scramble,
+                    cube,
+                    solveNumber,
+                };
 
-                    solvesDataAPI.getCubeSolves(cube)
-                        .then(data => {
-                            let solveNumber = data.length + 1;
-                            // the id is the solve number
-                            let solve = {
-                                date: now,
-                                time: time,
-                                scramble: scramble,
-                                cube,
-                                solveNumber,
-                            }
+                solvesTable.push(solve);
 
-                            solvesTable.push(solve);
-
-                            fs.writeFile(solvesPath, JSON.stringify(parsedContent), callback);
-                        });
-                }
-            );
-    }
-}
+                fs.writeFile(solvesPath, JSON.stringify(parsedContent), callback);
+            });
+        });
+    },
+};
 
 const solvesDataAPI = {
-
-    /**
-     * get all the solves
-     */
-    getSolves() {
-        let p = new Promise((resolve, reject) => {
-            ipcRenderer.invoke("getDeviceUserDataPath")
-                .then(data => {
-                        let solvesPath = path.join(data, "cubyData/solves.json");
-                        let content = fs.readFileSync(solvesPath);
-                        let solves = JSON.parse(content).solves;
-                        resolve(solves);
-                    }
-                );
-        });
-        return p.then(data => {
-            return data;
-        });
+    async getSolves() {
+        const data = await ipcRenderer.invoke("getDeviceUserDataPath");
+        const solvesPath = path.join(data, "cubyData/solves.json");
+        const content = fs.readFileSync(solvesPath);
+        return JSON.parse(content).solves;
     },
 
-    /**
-     * get the average of the all the solves of the cube param
-     */
-    getAverage(cube) {
-        let p = new Promise((resolve, reject) => {
-            let solves = solvesDataAPI.getSolves()
-                .then(solves => {
-                    let sum = 0;
-                    let solvesOfCube = solves.filter(solve => solve.cube === cube);
-                    solvesOfCube.forEach(solve => {
-                        sum += solve.time;
-                    });
-                    let average = sum / solvesOfCube.length;
-                    resolve(average);
-                });
-        });
-        return p.then(data => {
-            return data;
-        });
+    async getAverage(cube) {
+        const solves = await solvesDataAPI.getSolves();
+        const solvesOfCube = solves.filter((solve) => solve.cube === cube);
+        const sum = solvesOfCube.reduce((acc, solve) => acc + solve.time, 0);
+        return sum / solvesOfCube.length;
     },
 
-    getNbSolve() {
-        let p = new Promise((resolve, reject) => {
-            let solves = solvesDataAPI.getSolves()
-                .then(solves => {
-                    resolve(solves.length);
-                });
-        });
-        return p.then(data => {
-            return data;
-        });
+    async getNbSolve() {
+        const solves = await solvesDataAPI.getSolves();
+        return solves.length;
     },
 
-    /*
-     * get solves from a specific cube
-     */
-
-    getCubeSolves(cube) {
-        let p = new Promise((resolve, reject) => {
-            let solves = solvesDataAPI.getSolves()
-                .then(solves => {
-                    let solvesOfCube = [];
-                    for (let i = 0; i < solves.length; i++) {
-                        if (solves[i].cube === cube) {
-                            solvesOfCube[i] = solves[i];
-                        }
-                    }
-                    resolve(solvesOfCube);
-                });
-        });
-        return p.then(data => {
-            return data;
-        });
+    async getCubeSolves(cube) {
+        const solves = await solvesDataAPI.getSolves();
+        return solves.filter((solve) => solve.cube === cube);
     },
 
-    /**
-     * get the number of solves of the cube param
-     */
-    getCubeNbSolves(cube) {
-        let p = new Promise((resolve, reject) => {
-            let solves = solvesDataAPI.getSolves()
-                .then(solves => {
-                    let solvesOfCube = solves.filter(solve => solve.cube === cube);
-                    resolve(solvesOfCube.length);
-                });
-        });
-        return p.then(data => {
-            return data;
-        });
+    async getCubeNbSolves(cube) {
+        const solves = await solvesDataAPI.getSolves();
+        const solvesOfCube = solves.filter((solve) => solve.cube === cube);
+        return solvesOfCube.length;
     },
 
-    /**
-     * get the best solve of the cube param
-     */
-    getBestSolve(cube) {
-        let p = new Promise((resolve, reject) => {
-            let solves = solvesDataAPI.getSolves()
-                .then(solves => {
-                    let bestSolve = 0;
-                    let solvesOfCube = solves.filter(solve => solve.cube === cube);
-                    solvesOfCube.forEach(solve => {
-                        if (solve.time < bestSolve || bestSolve === 0) {
-                            bestSolve = solve.time;
-                        }
-                    });
-                    resolve(bestSolve);
-                });
+    async getBestSolve(cube) {
+        const solves = await solvesDataAPI.getSolves();
+        let bestSolve = 0;
+        const solvesOfCube = solves.filter((solve) => solve.cube === cube);
+        solvesOfCube.forEach((solve) => {
+            if (solve.time < bestSolve || bestSolve === 0) {
+                bestSolve = solve.time;
+            }
         });
-        return p.then(data => {
-            return data;
-        });
+        return bestSolve;
     },
 
-    /*
-     * delete a solve from its id
-     */
-    deleteSolve(id) {
-        let p = new Promise((resolve, reject) => {
-            let solves = solvesDataAPI.getSolves()
-                .then(solves => {
-                    let solvesWithoutDeleted = solves.filter(solve => solve.id !== id);
-                    let solvesData = {
-                        "solves": solvesWithoutDeleted
-                    }
-                    ipcRenderer.invoke("getDeviceUserDataPath")
-                        .then(data => {
-                                let solvesPath = path.join(data, "cubyData/solves.json");
-                                fs.writeFileSync(solvesPath, JSON.stringify(solvesData));
-                                resolve();
-                            }
-                        );
-                });
-        });
-        return p.then(data => {
-            return data;
-        });
+    async deleteSolve(id) {
+        const solves = await solvesDataAPI.getSolves();
+        const solvesWithoutDeleted = solves.filter((solve) => solve.id !== id);
+        const solvesData = { solves: solvesWithoutDeleted };
+
+        const data = await ipcRenderer.invoke("getDeviceUserDataPath");
+        const solvesPath = path.join(data, "cubyData/solves.json");
+        fs.writeFileSync(solvesPath, JSON.stringify(solvesData));
     },
-
-
-}
+};
 
 const openWindowApi = {
-    openUrl: (url) => {
-        shell.openExternal(url)
-    }
-}
+    openUrl: (url) => shell.openExternal(url),
+};
 
 const chartAPI = {
+    chart: null,
+
     getChart: (cube, element) => {
-        let solves = solvesDataAPI.getCubeSolves(cube).then(data => {
-            let chart = new Chart(element, {
-                type: 'line',
+        solvesDataAPI.getCubeSolves(cube).then((data) => {
+            if (chartAPI.chart !== null) {
+                chartAPI.chart.clear();
+                chartAPI.chart.destroy();
+            }
+
+            chartAPI.chart = new Chart(element, {
+                type: "line",
                 data: {
-                        labels: data.map(solve => solve.solveNumber),
-                    datasets: [{
-                        label: 'Solves for ' + cube,
-                        data: data.map(solve => solve.time),
-                        borderColor: '#009FFD',
-                        fill: false,
-                        tension: 0.1
-                    }]
+                    labels: data.map((solve) => solve.solveNumber),
+                    datasets: [
+                        {
+                            label: "Solves for " + cube,
+                            data: data.map((solve) => solve.time),
+                            borderColor: "#009FFD",
+                            fill: false,
+                            tension: 0.1,
+                        },
+                    ],
                 },
                 options: {
                     scales: {
                         y: {
                             ticks: {
-                                callback: function(value, index, values) {
+                                callback: function (value, index, values) {
                                     return timeAPI.formatDuration(value);
                                 },
-                                color: 'white',
+                                color: "white",
                                 font: {
                                     size: 14,
-                                }
-                            }
+                                },
+                            },
                         },
                         x: {
                             ticks: {
-                                color: 'white',
+                                color: "white",
                                 font: {
                                     size: 14,
-                                }
-                            }
-                        }
+                                },
+                            },
+                        },
                     },
                     elements: {
                         point: {
                             radius: 4,
-                            backgroundColor: '#009FFD',
+                            backgroundColor: "#009FFD",
                             hoverRadius: 5,
                             hoverBorderWidth: 2,
-                            hoverBackgroundColor: '#009FFD',
+                            hoverBackgroundColor: "#009FFD",
                             hitRadius: 5,
                             borderWidth: 2,
-                            borderColor: '#009FFD',
-                        }
-                    }
-                }
+                            borderColor: "#009FFD",
+                        },
+                    },
+                },
             });
         });
+    },
+};
+
+appdata.appIsInitialized().then((data) => {
+    const state = fs.existsSync(path.join(data, "cubyData"));
+    if (!state) {
+        appdata.initialize();
     }
-}
-
-
-appdata.appIsInitialized()
-    .then(data => {
-        let state = fs.existsSync(path.join(data, "cubyData"));
-        if (!state) {
-            appdata.initialize();
-        }
-        contextBridge.exposeInMainWorld("api", api);
-        contextBridge.exposeInMainWorld("openWindowApi", openWindowApi);
-        contextBridge.exposeInMainWorld("appdata", appdata);
-        contextBridge.exposeInMainWorld("timeAPI", timeAPI);
-        contextBridge.exposeInMainWorld("solvesDataAPI", solvesDataAPI);
-        contextBridge.exposeInMainWorld("chartAPI", chartAPI);
-
-    })
+    contextBridge.exposeInMainWorld("api", api);
+    contextBridge.exposeInMainWorld("openWindowApi", openWindowApi);
+    contextBridge.exposeInMainWorld("appdata", appdata);
+    contextBridge.exposeInMainWorld("timeAPI", timeAPI);
+    contextBridge.exposeInMainWorld("solvesDataAPI", solvesDataAPI);
+    contextBridge.exposeInMainWorld("chartAPI", chartAPI);
+});
