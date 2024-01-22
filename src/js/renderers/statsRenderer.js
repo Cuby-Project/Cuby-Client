@@ -3,6 +3,14 @@ const CUBE_SELECT = document.getElementById("selectCube");
 const NB_SOLVE_SELECT = document.getElementById("displayedNumber");
 const CONTENT = document.getElementById("content");
 
+function displayContent(change = false) {
+    console.log(CONTENT.getAttribute('display'))
+    if (CONTENT.getAttribute('display') === "chart") {
+        displayChart(CUBE_SELECT.value);
+    } else {
+        displayTable(CUBE_SELECT.value);
+    }
+}
 
 function displayChart(cube) {
     CONTENT.innerHTML = '<canvas id="myChart"></canvas>'
@@ -14,13 +22,13 @@ async function generateTableContent(cube) {
 
     // from the solves we generate the table content with a row per solve
     // and a column for the solve number, the time, the gap to average, the edit button, the delete button and the date
-    let content = "<tr class='tableTr'><th class='tableTh'>Solve number</th><th class='tableTh'>Time</th><th class='tableTh'>Gap to average</th><th class='tableTh'>Date</th><th class='tableTh'>Edit</th><th class='tableTh'>Delete</th></tr>";
+    let content = "<thead><tr class='tableTr block'><th class='tableTh'>Solve number</th><th class='tableTh'>Time</th><th class='tableTh'>Gap to average</th><th class='tableTh'>Date</th><th class='tableTh'>Edit</th><th class='tableTh'>Delete</th></tr></thead><tbody class='overflow-auto max-h-[59vh] block'>";
     let average = await solvesDataAPI.getAverage(cube);
     let nbSolve = solves.length;
 
     // if there is no solve yet, we display a message
     if (nbSolve === 0) {
-        return "<tr class='tableTr'><td class='tableTd' colspan='6'>No solve yet</td></tr>";
+        return "<tr class='tableTr block'><td class='tableTd' colspan='6'>No solve yet</td></tr></tbody>";
     }
 
     solves.forEach(solve => {
@@ -36,7 +44,7 @@ async function generateTableContent(cube) {
             gapToAverage = average - solve.time;
         }
         let gapString = timeAPI.formatDuration(gapToAverage)
-        let row = `<tr class='tableTr'><td class='tableTd'>${nbSolve}</td><td class='tableTd'>${timeAPI.formatDuration(solve.time)}</td>`;
+        let row = `<tr class='tableTr block'><td class='tableTd'>${nbSolve}</td><td class='tableTd'>${timeAPI.formatDuration(solve.time)}</td>`;
 
         if (negative) {
             row += `<td class='tableTd text-red-500'>${gapString}</td>`;
@@ -49,15 +57,16 @@ async function generateTableContent(cube) {
         nbSolve--;
     });
 
-    return content;
+    return content + "</tbody>";
 
 }
 
 async function displayTable(cube) {
     let content = await generateTableContent(cube);
+    // TODO: change to a grid
     CONTENT.innerHTML = `
-                        <div class='dark:bg-custom-gray-3 bg-blue-200 rounded-xl h-[65vh] w-hull flex items-center justify-center p-4 mx-2'>
-                            <table class='dark:text-white w-full' id='solvesHistory'>
+                        <div class='dark:bg-custom-gray-3 bg-blue-200 rounded-xl h-fit max-h-[65vh] flex items-center justify-center p-4'>
+                            <table class='dark:text-white w-full table-fixed full-width-table' id='solvesHistory'>
                                 ${content}
                             </table>
                         </div>
@@ -66,25 +75,22 @@ async function displayTable(cube) {
 }
 
 CUBE_SELECT.addEventListener('change', function () {
-    displayChart(this.value);
+    displayContent();
 });
 
 
 CHANGE_BUTTON.addEventListener('click', function () {
-    if (document.getElementById('content').display === "chart") {
-        document.getElementById('content').display = "table"
-
-        // display chart icon in the button and display the table
-        let cube = CUBE_SELECT.value;
-        CHANGE_BUTTON.innerHTML = "<i class='fa-solid fa-table-list mx-1'></i> change display";
-        displayChart(CUBE_SELECT.value);
+    if (CONTENT.getAttribute('display') === "chart") {
+        console.log('chart to table')
+        CONTENT.setAttribute('display', "table");
+        CHANGE_BUTTON.innerHTML = "<i class='fa-solid fa-chart-line mx-2'></i> Chart";
     } else {
-        document.getElementById('content').display = "chart";
-
-        // display table icon in the button and display the chart
-        CHANGE_BUTTON.innerHTML = "<i class='fa-solid fa-chart-line mx-1'></i> change display";
-        displayTable(CUBE_SELECT.value);
+        console.log('table to chart')
+        CONTENT.setAttribute('display', "chart")
+        CHANGE_BUTTON.innerHTML = "<i class='fa-solid fa-table-list mx-2'></i> Table";
     }
+    displayContent();
+
 });
 
-displayChart("3x3x3");
+displayContent();

@@ -24,7 +24,7 @@
 }
 
 .tableTr {
-    @apply text-center;
+    @apply text-center ;
 }
 
 .tableTd {
@@ -32,5 +32,17 @@
 }
 
 .tableTh {
-    @apply border-custom-gray-1 border-2 font-bold;
+    @apply border-custom-gray-1 border-2 font-bold sticky top-0 ;
+}
+
+Thead > tr {
+    @apply mr-[18px];
+}
+
+.full-width-table .tableTd {
+    @apply w-1/5
+}
+
+.full-width-table .tableTh {
+    @apply  w-1/5;
 }
