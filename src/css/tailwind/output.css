@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap');
 
 /*
-! tailwindcss v3.3.3 | MIT License | https://tailwindcss.com
+! tailwindcss v3.3.6 | MIT License | https://tailwindcss.com
 */
 
 /*
@@ -123,8 +123,10 @@ strong {
 }
 
 /*
-1. Use the user's configured `mono` font family by default.
-2. Correct the odd `em` font sizing in all browsers.
+1. Use the user's configured `mono` font-family by default.
+2. Use the user's configured `mono` font-feature-settings by default.
+3. Use the user's configured `mono` font-variation-settings by default.
+4. Correct the odd `em` font sizing in all browsers.
 */
 
 code,
@@ -133,8 +135,12 @@ samp,
 pre {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   /* 1 */
-  font-size: 1em;
+  font-feature-settings: normal;
   /* 2 */
+  font-variation-settings: normal;
+  /* 3 */
+  font-size: 1em;
+  /* 4 */
 }
 
 /*
@@ -608,10 +614,6 @@ video {
   margin-top: 1.75rem;
 }
 
-.block{
-  display: block;
-}
-
 .flex{
   display: flex;
 }
@@ -652,13 +654,12 @@ video {
   height: 25vh;
 }
 
-.h-\[calc\(100vh-35px\)\]{
-  height: calc(100vh - 35px);
+.h-\[65vh\]{
+  height: 65vh;
 }
 
-.h-fit{
-  height: -moz-fit-content;
-  height: fit-content;
+.h-\[calc\(100vh-35px\)\]{
+  height: calc(100vh - 35px);
 }
 
 .h-full{
@@ -667,14 +668,6 @@ video {
 
 .h-screen{
   height: 100vh;
-}
-
-.max-h-\[59vh\]{
-  max-height: 59vh;
-}
-
-.max-h-\[65vh\]{
-  max-height: 65vh;
 }
 
 .w-16{
@@ -701,10 +694,6 @@ video {
   flex: none;
 }
 
-.table-fixed{
-  table-layout: fixed;
-}
-
 .scale-0{
   --tw-scale-x: 0;
   --tw-scale-y: 0;
@@ -713,6 +702,10 @@ video {
 
 .grid-cols-2{
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-cols-5{
+  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
 .grid-rows-1{
@@ -745,10 +738,6 @@ video {
 
 .justify-between{
   justify-content: space-between;
-}
-
-.overflow-auto{
-  overflow: auto;
 }
 
 .rounded-2xl{
@@ -1040,16 +1029,11 @@ video {
   font-weight: 700;
 }
 
-Thead > tr{
-  margin-right: 18px;
-}
-
-.full-width-table .tableTd{
-  width: 20%;
-}
-
-.full-width-table .tableTh{
-  width: 20%;
+.grid-cell{
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(54 57 62 / var(--tw-border-opacity));
+  text-align: center;
 }
 
 .hover\:rotate-1:hover{
