@@ -3,7 +3,7 @@ const CUBE_SELECT = document.getElementById("selectCube");
 const NB_SOLVE_SELECT = document.getElementById("displayedNumber");
 const CONTENT = document.getElementById("content");
 
-function displayContent(change = false) {
+function displayContent() {
     if (CONTENT.getAttribute('display') === "chart") {
         displayChart(CUBE_SELECT.value);
     } else {
@@ -17,38 +17,43 @@ function displayChart(cube) {
 }
 
 async function displayTable(cube) {
-    // TODO: change to a grid
     let solves = await solvesDataAPI.getCubeSolves(cube);
     CONTENT.innerHTML = `
-                        <div class="grid grid-cols-5 grid-rows-${solves.length + 1} dark:bg-custom-gray-2 bg-blue-100 rounded-lg shadow-lg p-5 w-full h-[65vh] m-1">
-                            <div class="text-center text-white font-bold">solve number</div>
-                            <div class="text-center text-white font-bold">time</div>
-                            <div class="text-center text-white font-bold">gap to average</div>
-                            <div class="text-center text-white font-bold">scramble</div>
-                            <div class="text-center text-white font-bold">edit</div>
-                            ${solves.map((solve) => {
-                                let average = 0;
-                                solves.forEach((solve) => {
-                                    average += solve.time;
-                                });
-                                average = average / solves.length;
-                                let negative = false;
-                                let gapToAverage;
-                                if (solve.time > average) {
-                                    gapToAverage = solve.time - average;
-                                    negative = true;
-                                } else {
-                                    gapToAverage = average - solve.time;
-                                }
-                                return `
-                                    <div class="text-center text-white grid-cell">${solve.solveNumber}</div>
-                                    <div class="text-center text-white grid-cell">${timeAPI.formatDuration(solve.time)}</div>
-                                    ${negative ? `<div class="text-center grid-cell text-red-500">+ ${timeAPI.formatDuration(gapToAverage)}</div>` 
-                                               : `<div class="text-center grid-cell text-green-500">- ${timeAPI.formatDuration(gapToAverage)}</div>`}
-                                    <div class="text-center grid-cell text-white">${solve.scramble}</div>
-                                    <div class="text-center grid-cell text-white"><i class='fas fa-edit text-custom-blue'></i></div>`;
-                            }).join('')}
-                        }`;
+                        <div class="grid grid-solves grid-cols-1 grid-row-2 dark:bg-custom-gray-2 bg-blue-100 rounded-lg shadow-lg p-5 w-full h-[65vh] m-1">
+                            <div class="first-row grid grid-rows-1 grid-cols-5 mr-[11px]">
+                                <div class="dark:text-white text-center grid-cell font-bold">solve number</div>
+                                <div class="dark:text-white text-center grid-cell font-bold">time</div>
+                                <div class="dark:text-white text-center grid-cell font-bold">gap to average</div>
+                                <div class="dark:text-white text-center grid-cell font-bold">date</div>
+                                <div class="dark:text-white text-center grid-cell font-bold">edit</div>
+                            </div>
+                            <div class="grid grid-cols-5 grid-rows-${solves.length + 1} max-h-[60vh] overflow-y-scroll">
+                                ${
+                                    solves.reverse().map((solve) => {
+                                    let average = 0;
+                                    solves.forEach((solve) => {
+                                        average += solve.time;
+                                    });
+                                    average = average / solves.length;
+                                    let negative = false;
+                                    let gapToAverage;
+                                    if (solve.time > average) {
+                                        gapToAverage = solve.time - average;
+                                        negative = true;
+                                    } else {
+                                        gapToAverage = average - solve.time;
+                                    }
+                                    return `
+                                        <div class="dark:text-white grid-cell">${solve.solveNumber}</div>
+                                        <div class="dark:text-white grid-cell">${timeAPI.formatDuration(solve.time)}</div>
+                                        ${negative ? `<div class="grid-cell text-red-500">+ ${timeAPI.formatDuration(gapToAverage)}</div>` 
+                                                   : `<div class="grid-cell text-green-500">- ${timeAPI.formatDuration(gapToAverage)}</div>`}
+                                        <div class="grid-cell dark:text-white">${solve.date}</div>
+                                        <div class="grid-cell dark:text-white"><i class='fas fa-edit text-custom-blue'></i></div>`;
+                                }).join(``)}
+                            </div>
+                        </div>
+                        `;
 }
 
 CUBE_SELECT.addEventListener('change', function () {

@@ -36,5 +36,24 @@
 }
 
 .grid-cell {
-    @apply text-center border-custom-gray-1 border-2;
+    @apply text-center border-custom-gray-1 dark:border-2 border p-1 dark:font-medium font-bold;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    @apply bg-custom-gray-0 rounded-xl;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    @apply bg-custom-blue rounded-xl;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    @apply bg-[#108DD7FF]
 }
