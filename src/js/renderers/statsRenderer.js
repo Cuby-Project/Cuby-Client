@@ -19,7 +19,7 @@ function displayChart(cube) {
 async function displayTable(cube) {
     let solves = await solvesDataAPI.getCubeSolves(cube);
     CONTENT.innerHTML = `
-                        <div class="grid grid-solves grid-cols-1 grid-row-2 dark:bg-custom-gray-2 bg-blue-100 rounded-lg shadow-lg p-5 w-full h-[65vh] m-1">
+                        <div class="grid grid-solves grid-cols-1 grid-row-2 dark:bg-custom-gray-2 bg-blue-100 rounded-lg shadow-lg p-5 w-full h-[60vh] m-1">
                             <div class="first-row grid grid-rows-1 grid-cols-5 mr-[11px]">
                                 <div class="dark:text-white text-center grid-cell font-bold">solve number</div>
                                 <div class="dark:text-white text-center grid-cell font-bold">time</div>
