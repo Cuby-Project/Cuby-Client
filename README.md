@@ -8,7 +8,7 @@
 <img src="https://img.shields.io/github/stars/quentinformatique/Cuby.svg">
 <img src="https://img.shields.io/github/forks/quentinformatique/Cuby.svg">
 <img src="https://img.shields.io/github/issues/quentinformatique/Cuby.svg">
-<img src="https://img.shields.io/github/languages/code-size/quentinformatique/Cuby.svg">
+[![CodeQL](https://github.com/quentinformatique/Cuby/actions/workflows/codeql.yml/badge.svg)](https://github.com/quentinformatique/Cuby/actions/workflows/codeql.yml)
 <img src="https://img.shields.io/github/last-commit/quentinformatique/Cuby.svg">
 
 </div>
