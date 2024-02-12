@@ -3,12 +3,28 @@ const path = require('path')
 
 let win;
 function createWindow () {
+    // Create the browser window for the splash screen
+    let splash = new BrowserWindow({
+        width: 500,
+        height: 300,
+        transparent: true,
+        frame: false,
+        alwaysOnTop: true
+    });
+
+    // Load the splash screen html
+    splash.loadFile('src/pages/splash.html');
+    splash.setIcon(path.join(__dirname, '../img/icon.ico'));
+    splash.center();
+
+
     win = new BrowserWindow({
         width: 1000,
         height: 790,
         minWidth: 1000,
         minHeight: 790,
         frame: false,
+        backgroundColor: '#282c34',
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
 
@@ -16,8 +32,16 @@ function createWindow () {
         }
     })
 
-    win.loadFile('src/pages/index.html')
+    win.loadFile('src/pages/index.html');
     win.setIcon(path.join(__dirname, '../img/icon.ico'));
+
+
+    win.once('ready-to-show', () => {
+        splash.destroy();
+        win.show();
+    });
+
+
 }
 
 app.whenReady().then(() => {
@@ -46,6 +70,7 @@ app.whenReady().then(() => {
         win.minimize();
     })
 })
+
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {

@@ -11,20 +11,6 @@ const previewIcon = document.querySelector("#previewIcon");
 // tumer items
 const timerDisplay = document.getElementById("timer");
 
-
-const cubes = {
-    "2x2": "2x2x2",
-    "3x3": "3x3x3",
-    "4x4": "4x4x4",
-    "5x5": "5x5x5",
-    "6x6": "6x6x6",
-    "7x7": "7x7x7",
-    "square-one": "square1",
-    "pyraminx": "pyraminx",
-    "skewb": "skewb",
-    "megaminx": "megaminx"
-}
-
 function refreshScramble() {
     // if the preview is displayed, we hide it
     if (!previewContainer.classList.contains("hidden")) {
@@ -60,7 +46,7 @@ function changeDisplay() {
 function displayPreview() {
     let alg = scramble.innerHTML;
     let puzzle = selectCube.value;
-    previewScramble.innerHTML = generatePreview(cubes[puzzle], alg);
+    previewScramble.innerHTML = generatePreview(puzzle, alg);
     changeDisplay();
 }
 
@@ -68,13 +54,20 @@ buttonGenerate.addEventListener('click', refreshScramble)
 refreshScramble();
 
 buttonDisplayScramble.addEventListener('click', displayPreview)
-selectCube.addEventListener("change", displayPreview)
 
 buttonGenerate.addEventListener('click', refreshScramble)
 refreshScramble();
 
 buttonDisplayScramble.addEventListener('click', displayPreview)
-selectCube.addEventListener("change", displayPreview)
+
+// if the scramble preview is display, we refresh it when the cube is changed
+selectCube.addEventListener('change', () => {
+    if (!previewContainer.classList.contains("hidden")) {
+        displayPreview();
+    }
+    refreshStatistics();
+    refreshScramble();
+});
 
 
 let time = 0;
@@ -161,13 +154,13 @@ function stop() {
     refreshScramble(); // when we stop the timer, a new scramble is proposed
 
     time = timeAPI.getDuration(timerStart);
-    timeAPI.registerTime(time, cubes[selectCube.value], getScramble(), refreshStatistics);
+    timeAPI.registerTime(time, selectCube.value, getScramble(), refreshStatistics);
 }
 
 // statistics at the bottom of the page :
 
 function displayAverage() {
-    solvesDataAPI.getAverage(cubes[selectCube.value])
+    solvesDataAPI.getAverage(selectCube.value)
         .then(data => {
             if (isNaN(data) || data === 0) {
                 document.querySelector("#average").innerHTML = "No solve yet";
@@ -178,7 +171,7 @@ function displayAverage() {
 }
 
 function displayBest() {
-    solvesDataAPI.getBestSolve(cubes[selectCube.value])
+    solvesDataAPI.getBestSolve(selectCube.value)
         .then(data => {
             if (data === 0) {
                 document.querySelector("#best").innerHTML = "No solve yet";
@@ -190,7 +183,7 @@ function displayBest() {
 
 
 function displaySolveNumber() {
-    solvesDataAPI.getCubeNbSolves(cubes[selectCube.value])
+    solvesDataAPI.getCubeNbSolves(selectCube.value)
         .then(data => {
             document.querySelector("#solveNumber").innerHTML = data;
         });
@@ -208,7 +201,7 @@ selectCube.addEventListener("change", refreshStatistics)
 // display the solves history in a table
 
 function displaySolvesHistory() {
-    solvesDataAPI.getCubeSolves(cubes[selectCube.value])
+    solvesDataAPI.getCubeSolves(selectCube.value)
         .then(data => {
             let average = 0;
             for (let i = 0; i < data.length; i++) {
@@ -235,7 +228,6 @@ function displaySolvesHistory() {
                 } else {
                     gapToAverage = average - solve.time;
                 }
-                console.log(gapToAverage)
 
                 row.classList.add("tableTr");
                 row.innerHTML = "<td class='tableTd'>" + solve.solveNumber + "</td>";

@@ -11,7 +11,13 @@
 .side-bar-item {
     @apply relative flex items-center justify-center
     h-12 w-12 mt-2 mb-2 mx-auto hover:bg-custom-blue bg-white dark:bg-custom-gray-0 text-custom-blue hover:rounded-xl rounded-3xl
-    cursor-pointer shadow-lg;
+    cursor-pointer transition-all duration-300 ease-linear shadow-lg;
+}
+
+.side-bar-item-disabled {
+    @apply relative flex items-center justify-center
+    h-12 w-12 mt-2 mb-2 mx-auto bg-custom-gray-0 text-custom-gray-1 rounded-3xl
+    cursor-not-allowed;
 }
 
 .side-bar-main {
@@ -24,7 +30,7 @@
 }
 
 .tableTr {
-    @apply text-center;
+    @apply text-center ;
 }
 
 .tableTd {
@@ -32,5 +38,28 @@
 }
 
 .tableTh {
-    @apply border-custom-gray-1 border-2 font-bold;
+    @apply border-custom-gray-1 border-2 font-bold sticky top-0 ;
+}
+
+.grid-cell {
+    @apply text-center border-custom-gray-1 dark:border-2 border p-1 dark:font-medium font-bold;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    @apply bg-custom-gray-0 rounded-xl;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    @apply bg-custom-blue rounded-xl;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    @apply bg-[#108DD7FF]
 }

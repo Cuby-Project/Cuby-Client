@@ -1,6 +1,5 @@
 body {
     margin: 0;
-    padding: 35px 0 0 65px;
     font-family: sans-serif;
     text-align: justify;
 }
@@ -37,6 +36,3 @@ body {
 .button.minimize:hover { background: #D48802; }
 .button.maximize:hover { background: #4EBD06; }
 
-.body {
-    margin-top: 10px /* Set to the height of the #titlebar */
-}

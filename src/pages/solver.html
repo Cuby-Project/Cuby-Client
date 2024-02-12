@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link href="../css/tailwind/output.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/titlebar.css" />
+    <link rel="stylesheet" href="../css/titlebar.css"/>
     <script defer src="../../node_modules/@fortawesome/fontawesome-free/js/brands.js"></script>
     <script defer src="../../node_modules/@fortawesome/fontawesome-free/js/solid.js"></script>
     <script defer src="../../node_modules/@fortawesome/fontawesome-free/js/fontawesome.js"></script>
@@ -20,40 +20,43 @@
         </div>
     </div>
 </header>
-<div class="fixed top-7 left-0 h-screen w-16 flex flex-col bg-blue-100 dark:bg-custom-gray-2">
-    <a href="index.html">
-        <div class="side-bar-main group">
-            <img src="../img/icon.png" alt="icon">
+<div class="flex mt-7">
+    <div class="flex-none">
+        <div class="h-[calc(100vh-35px)] w-16 flex flex-col bg-blue-100 dark:bg-custom-gray-2">
+            <a href="index.html">
+                <div class="side-bar-main group">
+                    <img src="../img/icon.png" alt="icon">
+                </div>
+            </a>
+            <a href="timer.html">
+                <div class="side-bar-item group">
+                    <i class="fa-solid fa-stopwatch text-custom-blue fa-2xl group-hover:text-white"></i>
+                </div>
+            </a>
+            <a href="solver.html">
+                <div class="current-item group side-bar-item">
+                    <i class="fa-solid fa-microchip text-custom-blue fa-2xl group-hover:text-white"></i>
+                </div>
+            </a>
+            <a href="stats.html">
+                <div class="side-bar-item group">
+                    <i class="fa-solid fa-chart-simple text-custom-blue fa-2xl group-hover:text-white"></i>
+                </div>
+            </a>
+            <a href="algs.html">
+                <div class="side-bar-item group">
+                    <i class="fa-solid fa-book text-custom-blue fa-2xl group-hover:text-white"></i>
+                </div>
+            </a>
+            <a href="settings.html">
+                <div class="side-bar-item group">
+                    <i class="fa-solid fa-gears text-custom-blue fa-2xl group-hover:text-white"></i>
+                </div>
+            </a>
         </div>
-    </a>
-    <a href="timer.html">
-        <div class="side-bar-item group">
-            <i class="fa-solid fa-stopwatch text-custom-blue fa-2xl group-hover:text-white"></i>
-        </div>
-    </a>
-    <a href="solver.html">
-        <div class="current-item group side-bar-item">
-            <i class="fa-solid fa-microchip text-custom-blue fa-2xl group-hover:text-white"></i>
-        </div>
-    </a>
-    <a href="stats.html">
-        <div class="side-bar-item group">
-            <i class="fa-solid fa-chart-simple text-custom-blue fa-2xl group-hover:text-white"></i>
-        </div>
-    </a>
-    <a href="algs.html">
-        <div class="side-bar-item group">
-            <i class="fa-solid fa-book text-custom-blue fa-2xl group-hover:text-white"></i>
-        </div>
-    </a>
-    <a href="settings.html">
-        <div class="side-bar-item group">
-            <i class="fa-solid fa-gears text-custom-blue fa-2xl group-hover:text-white"></i>
-        </div>
-    </a>
-</div>
-<div class="flex justify-center items-center h-[calc(100vh-35px)]">
-    <i class="fa-solid fa-hammer text-custom-blue fa-10x fa-spin"></i>
+    </div>
+    <div class="flex justify-center items-center h-[calc(100vh-35px)]">
+    </div>
 </div>
 </body>
 </html>
