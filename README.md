@@ -12,7 +12,7 @@
 
 </div>
 
-**Cuby** a ElectronJS app for *Rubik's Cubes*, it contains everithing you need to solve, time, learn and explore Rubik's Cubes.  I created this app using electronJS, it's still in development for now but can already use it, read the installation tutorial if you want to give it a try.
+**Cuby** a ElectronJS app for *Rubik's Cubes*, it contains everything you need to solve, time, learn and explore Rubik's Cubes.  I created this app using electronJS, it's still in development for now but can already use it, read the installation tutorial if you want to give it a try.
 
 <div align="center">
 -<a href="https://github.com/quentinformatique/Cuby/issues/new/choose">Report a bug</a>--<a href="https://github.com/quentinformatique/Cuby/issues/new/choose">Request a feature</a>-
@@ -35,9 +35,9 @@
 ## Installation
 
 ---
-if you want to try the app, folow this steps:
-1. clone or fork this repositorie
-2. run the folowing commands at the root folder:
+if you want to try the app you can either download the release or follow these steps:
+1. Clone or fork this repositorie
+2. run the following commands at the root folder:
     - ```npm install```
     - ```npx tailwindcss -i ./src/css/input.css -o ./src/css/tailwind/output.css --watch```
     - ```npm run start```
@@ -67,7 +67,8 @@ Don't forget to give the project a star! Thanks again!
 ## Coming in the future
 
 ---
-This app is still in development, im currently working on the statistics sections, i want a page where you can finds all the informations about you solves with charts. I have just finished the inner modelisation so now the app is usable but there is still a lot of progress to, if you have any sugestions fell free to open a pull request or an issue if you find a bug.
+This app is still in development, I'm currently working on the statistics sections, I want a page where you can find all the information about your solves with charts. I have just finished the inner modelisation, so now the app is usable, but there is still a lot of progress too, if you have any suggestions fell free to open a pull request or an issue if you find a bug.
 
 ## Version: v1.2
 ## Developed by : *quentinformatique*
+
