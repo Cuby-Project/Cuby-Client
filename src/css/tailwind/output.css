@@ -672,6 +672,14 @@ video {
   height: 100vh;
 }
 
+.h-\[70vh\]{
+  height: 70vh;
+}
+
+.h-\[68vh\]{
+  height: 68vh;
+}
+
 .max-h-\[60vh\]{
   max-height: 60vh;
 }
@@ -690,6 +698,30 @@ video {
 
 .w-full{
   width: 100%;
+}
+
+.w-\[100vw\]{
+  width: 100vw;
+}
+
+.w-\[80vw\]{
+  width: 80vw;
+}
+
+.w-\[90vw\]{
+  width: 90vw;
+}
+
+.w-\[95vw\]{
+  width: 95vw;
+}
+
+.w-\[94vw\]{
+  width: 94vw;
+}
+
+.w-\[93vw\]{
+  width: 93vw;
 }
 
 .flex-1{

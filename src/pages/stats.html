@@ -59,18 +59,7 @@
     <div class="flex-1">
         <div class="flex flex-col h-[calc(100vh-35px)]">
             <div class="flex h-11 bg-blue-100 dark:bg-custom-gray-2 shadow-lg p-2 m-3 rounded-xl">
-                <div class="flex-1">
-                    <label class="dark:text-white" for="displayedNumber">solves displayed : </label>
-                    <select id="displayedNumber"
-                            class="dark:bg-custom-gray-2 dark:text-white rounded-2xl border p-0.5 border-custom-blue"
-                            name="displayedNumber-Scramble">
-                        <option value="all">all</option>
-                        <option value="100">100</option>
-                        <option value="50">50</option>
-                        <option value="20">20</option>
-                        <option value="10">10</option>
-                    </select>
-                </div>
+
                 <div>
                     <label class="dark:text-white" for="selectCube">cube : </label>
                     <select class="dark:bg-custom-gray-2 dark:text-white rounded-2xl border p-0.5 border-custom-blue"
@@ -96,11 +85,11 @@
                     </button>
                 </div>
             </div>
-            <div class="flex-1 m-4" id="content" display="chart">
+            <div class="h-[68vh] flex justify-center w-[93vw]" id="content" display="chart">
                 <canvas id="myChart"></canvas>
             </div>
-            <div class="h-[18vh] dark:bg-custom-gray-2 bg-blue-100 shadow-lg m-3 rounded-xl p-2 flex">
-                <div class="dark:bg-custom-gray-3 bg-blue-200 rounded-xl h-full w-hull flex justify-center p-4 mx-2 flex-col  flex-1 ">
+            <div class="h-[18vh] dark:bg-custom-gray-2 bg-blue-100 shadow-lg m-3 rounded-xl p-2 flex justify-center">
+                <div class="dark:bg-custom-gray-3 bg-blue-200 rounded-xl h-full flex justify-center p-4 mx-2 flex-col  ">
                     <div class="dark:text-white text-xl">
                         <i class="fa-solid fa-star fa-fw text-custom-blue"></i> Best solve : <span class="text-custom-blue">00:11.34</span>
                     </div>
@@ -111,7 +100,7 @@
                         <i class="fa-solid fa-signal fa-fw text-custom-blue"></i> Solves : <span class="text-custom-blue">30</span>
                     </div>
                 </div>
-                <div class="dark:bg-custom-gray-3 bg-blue-200 rounded-xl h-full w-hull flex justify-center p-4 mx-2 flex-col  flex-1 ">
+                <div class="dark:bg-custom-gray-3 bg-blue-200 rounded-xl h-full flex justify-center p-4 mx-2 flex-col  ">
                     <div class="dark:text-white text-xl py-2">
                         <i class="fa-solid fa-gauge-simple fa-fw text-custom-blue"></i> Best Ao5 : <span class="text-custom-blue">00:11.34</span>
                     </div>
@@ -119,7 +108,7 @@
                         <i class="fa-solid fa-gauge-high fa-fw text-custom-blue"></i> Best Ao12 : <span class="text-custom-blue">00:17.90</span>
                     </div>
                 </div>
-                <div class="dark:bg-custom-gray-3 bg-blue-200 rounded-xl h-full w-hull flex justify-center p-4 mx-2 flex-col ">
+                <div class="dark:bg-custom-gray-3 bg-blue-200 rounded-xl h-full flex justify-center p-4 mx-2 flex-col ">
                     <div class="dark:text-white text-xl py-2">
                         <i class="fa-solid fa-calendar-minus fa-fw text-custom-blue"></i> First solve the <span class="text-custom-blue">16/12/2023</span>
                     </div>
