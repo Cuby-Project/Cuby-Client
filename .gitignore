@@ -57,3 +57,5 @@ spec/fixtures/logo.png
 
 # idea
 .idea/
+
+out/

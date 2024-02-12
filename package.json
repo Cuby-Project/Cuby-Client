@@ -5,7 +5,10 @@
   "main": "src/js/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish"
   },
   "repository": {
     "type": "git",
@@ -21,6 +24,13 @@
   },
   "homepage": "https://github.com/quentinformatique/Cuby#readme",
   "devDependencies": {
+    "@electron-forge/cli": "^7.2.0",
+    "@electron-forge/maker-deb": "^7.2.0",
+    "@electron-forge/maker-rpm": "^7.2.0",
+    "@electron-forge/maker-squirrel": "^7.2.0",
+    "@electron-forge/maker-zip": "^7.2.0",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.2.0",
+    "@electron-forge/publisher-github": "^7.2.0",
     "electron": "^26.3.0",
     "tailwindcss": "^3.3.3"
   },
@@ -29,6 +39,7 @@
     "axios": "^1.6.5",
     "chart.js": "^4.4.1",
     "cubing": "^0.43.4",
+    "electron-squirrel-startup": "^1.0.0",
     "fs": "^0.0.1-security",
     "fs-extra": "^11.1.1",
     "moment": "^2.29.4",
