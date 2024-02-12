@@ -139,6 +139,59 @@ const solvesDataAPI = {
         const solvesPath = path.join(data, "cubyData/solves.json");
         fs.writeFileSync(solvesPath, JSON.stringify(solvesData));
     },
+    async getBestSolve(cube) {
+        const solves = await solvesDataAPI.getSolves();
+        const solvesOfCube = solves.filter((solve) => solve.cube === cube);
+        return Math.min(...solvesOfCube.map(solve => solve.time));
+    },
+
+    async getAverage(cube) {
+        const solves = await solvesDataAPI.getSolves();
+        const solvesOfCube = solves.filter((solve) => solve.cube === cube);
+        const sum = solvesOfCube.reduce((acc, solve) => acc + solve.time, 0);
+        return sum / solvesOfCube.length;
+    },
+
+    async getNbSolve(cube) {
+        const solves = await solvesDataAPI.getSolves();
+        const solvesOfCube = solves.filter((solve) => solve.cube === cube);
+        return solvesOfCube.length;
+    },
+
+    async getBestAo5(cube) {
+        const solves = await solvesDataAPI.getSolves();
+        const solvesOfCube = solves.filter((solve) => solve.cube === cube);
+        const averages = [];
+        for (let i = 0; i < solvesOfCube.length - 4; i++) {
+            const sum = solvesOfCube.slice(i, i + 5).reduce((acc, solve) => acc + solve.time, 0);
+            averages.push(sum / 5);
+        }
+        return Math.min(...averages);
+    },
+
+    async getBestAo12(cube) {
+        const solves = await solvesDataAPI.getSolves();
+        const solvesOfCube = solves.filter((solve) => solve.cube === cube);
+        const averages = [];
+        for (let i = 0; i < solvesOfCube.length - 11; i++) {
+            const sum = solvesOfCube.slice(i, i + 12).reduce((acc, solve) => acc + solve.time, 0);
+            averages.push(sum / 12);
+        }
+        return Math.min(...averages);
+    },
+
+    async getFirstSolveDate(cube) {
+        const solves = await solvesDataAPI.getSolves();
+        const firstSolve = solves.find((solve) => solve.cube === cube);
+        return firstSolve.date
+    },
+
+    async getLastSolveDate(cube) {
+        // we get the last solve of the cube
+        const solves = await solvesDataAPI.getSolves();
+        const lastSolve = solves.filter((solve) => solve.cube === cube).pop();
+        return lastSolve.date
+    },
 };
 
 const openWindowApi = {
@@ -208,6 +261,7 @@ const chartAPI = {
         });
     },
 };
+
 
 appdata.appIsInitialized().then((data) => {
     const state = fs.existsSync(path.join(data, "cubyData"));

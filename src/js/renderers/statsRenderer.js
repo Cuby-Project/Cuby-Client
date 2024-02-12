@@ -2,6 +2,13 @@ const CHANGE_BUTTON = document.getElementById("changeView");
 const CUBE_SELECT = document.getElementById("selectCube");
 const NB_SOLVE_SELECT = document.getElementById("displayedNumber");
 const CONTENT = document.getElementById("content");
+const bestSolveElement = document.querySelector('.fa-star + span');
+const averageElement = document.querySelector('.fa-chart-line + span');
+const solvesElement = document.querySelector('.fa-signal + span');
+const bestAo5Element = document.querySelector('.fa-gauge-simple + span');
+const bestAo12Element = document.querySelector('.fa-gauge-high + span');
+const firstSolveDateElement = document.querySelector('.fa-calendar-minus + span');
+const lastSolveDateElement = document.querySelector('.fa-calendar-plus + span');
 
 function displayContent() {
     if (CONTENT.getAttribute('display') === "chart") {
@@ -9,6 +16,35 @@ function displayContent() {
     } else {
         displayTable(CUBE_SELECT.value);
     }
+
+    solvesDataAPI.getBestSolve(CUBE_SELECT.value).then(bestSolve => {
+        bestSolveElement.textContent = timeAPI.formatDuration(bestSolve);
+    });
+
+    solvesDataAPI.getAverage(CUBE_SELECT.value).then(average => {
+        averageElement.textContent = timeAPI.formatDuration(average);
+    });
+
+    solvesDataAPI.getNbSolve(CUBE_SELECT.value).then(nbSolve => {
+        solvesElement.textContent = nbSolve;
+    });
+
+    solvesDataAPI.getBestAo5(CUBE_SELECT.value).then(bestAo5 => {
+        bestAo5Element.textContent = timeAPI.formatDuration(bestAo5);
+    });
+
+    solvesDataAPI.getBestAo12(CUBE_SELECT.value).then(bestAo12 => {
+        bestAo12Element.textContent = timeAPI.formatDuration(bestAo12);
+    });
+
+    solvesDataAPI.getFirstSolveDate(CUBE_SELECT.value).then(firstSolveDate => {
+        firstSolveDateElement.textContent =firstSolveDate
+    });
+
+    solvesDataAPI.getLastSolveDate(CUBE_SELECT.value).then(lastSolveDate => {
+        lastSolveDateElement.textContent = lastSolveDate
+        console.log(lastSolveDate)
+    });
 }
 
 function displayChart(cube) {
@@ -29,28 +65,28 @@ async function displayTable(cube) {
                             </div>
                             <div class="grid grid-cols-5 grid-rows-${solves.length + 1} max-h-[60vh] overflow-y-scroll">
                                 ${
-                                    solves.reverse().map((solve) => {
-                                    let average = 0;
-                                    solves.forEach((solve) => {
-                                        average += solve.time;
-                                    });
-                                    average = average / solves.length;
-                                    let negative = false;
-                                    let gapToAverage;
-                                    if (solve.time > average) {
-                                        gapToAverage = solve.time - average;
-                                        negative = true;
-                                    } else {
-                                        gapToAverage = average - solve.time;
-                                    }
-                                    return `
+        solves.reverse().map((solve) => {
+            let average = 0;
+            solves.forEach((solve) => {
+                average += solve.time;
+            });
+            average = average / solves.length;
+            let negative = false;
+            let gapToAverage;
+            if (solve.time > average) {
+                gapToAverage = solve.time - average;
+                negative = true;
+            } else {
+                gapToAverage = average - solve.time;
+            }
+            return `
                                         <div class="dark:text-white grid-cell">${solve.solveNumber}</div>
                                         <div class="dark:text-white grid-cell">${timeAPI.formatDuration(solve.time)}</div>
-                                        ${negative ? `<div class="grid-cell text-red-500">+ ${timeAPI.formatDuration(gapToAverage)}</div>` 
-                                                   : `<div class="grid-cell text-green-500">- ${timeAPI.formatDuration(gapToAverage)}</div>`}
+                                        ${negative ? `<div class="grid-cell text-red-500">+ ${timeAPI.formatDuration(gapToAverage)}</div>`
+                : `<div class="grid-cell text-green-500">- ${timeAPI.formatDuration(gapToAverage)}</div>`}
                                         <div class="grid-cell dark:text-white">${solve.date}</div>
                                         <div class="grid-cell dark:text-white"><i class='fas fa-edit text-custom-blue'></i></div>`;
-                                }).join(``)}
+        }).join(``)}
                             </div>
                         </div>
                         `;
