@@ -11,7 +11,13 @@
 .side-bar-item {
     @apply relative flex items-center justify-center
     h-12 w-12 mt-2 mb-2 mx-auto hover:bg-custom-blue bg-white dark:bg-custom-gray-0 text-custom-blue hover:rounded-xl rounded-3xl
-    cursor-pointer shadow-lg;
+    cursor-pointer transition-all duration-300 ease-linear shadow-lg;
+}
+
+.side-bar-item-disabled {
+    @apply relative flex items-center justify-center
+    h-12 w-12 mt-2 mb-2 mx-auto bg-custom-gray-0 text-custom-gray-1 rounded-3xl
+    cursor-not-allowed;
 }
 
 .side-bar-main {

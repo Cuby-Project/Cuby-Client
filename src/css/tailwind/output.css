@@ -660,6 +660,10 @@ video {
   height: 60vh;
 }
 
+.h-\[68vh\]{
+  height: 68vh;
+}
+
 .h-\[calc\(100vh-35px\)\]{
   height: calc(100vh - 35px);
 }
@@ -670,14 +674,6 @@ video {
 
 .h-screen{
   height: 100vh;
-}
-
-.h-\[70vh\]{
-  height: 70vh;
-}
-
-.h-\[68vh\]{
-  height: 68vh;
 }
 
 .max-h-\[60vh\]{
@@ -696,32 +692,12 @@ video {
   width: 15rem;
 }
 
-.w-full{
-  width: 100%;
-}
-
-.w-\[100vw\]{
-  width: 100vw;
-}
-
-.w-\[80vw\]{
-  width: 80vw;
-}
-
-.w-\[90vw\]{
-  width: 90vw;
-}
-
-.w-\[95vw\]{
-  width: 95vw;
-}
-
-.w-\[94vw\]{
-  width: 94vw;
-}
-
 .w-\[93vw\]{
   width: 93vw;
+}
+
+.w-full{
+  width: 100%;
 }
 
 .flex-1{
@@ -736,6 +712,10 @@ video {
   --tw-scale-x: 0;
   --tw-scale-y: 0;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.cursor-not-allowed{
+  cursor: not-allowed;
 }
 
 .grid-cols-1{
@@ -1019,6 +999,10 @@ video {
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+  transition-timing-function: linear;
 }
 
 .side-bar-item:hover{
@@ -1030,6 +1014,25 @@ video {
 :is(.dark .side-bar-item){
   --tw-bg-opacity: 1;
   background-color: rgb(66 69 73 / var(--tw-bg-opacity));
+}
+
+.side-bar-item-disabled{
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  height: 3rem;
+  width: 3rem;
+  cursor: not-allowed;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1.5rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(66 69 73 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(54 57 62 / var(--tw-text-opacity));
 }
 
 .side-bar-main{
@@ -1149,6 +1152,11 @@ video {
 :is(.dark .dark\:bg-custom-gray-0){
   --tw-bg-opacity: 1;
   background-color: rgb(66 69 73 / var(--tw-bg-opacity));
+}
+
+:is(.dark .dark\:bg-custom-gray-1){
+  --tw-bg-opacity: 1;
+  background-color: rgb(54 57 62 / var(--tw-bg-opacity));
 }
 
 :is(.dark .dark\:bg-custom-gray-2){
