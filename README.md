@@ -69,6 +69,6 @@ Don't forget to give the project a star! Thanks again!
 ---
 This app is still in development, I'm currently working on the statistics sections, I want a page where you can find all the information about your solves with charts. I have just finished the inner modelisation, so now the app is usable, but there is still a lot of progress too, if you have any suggestions fell free to open a pull request or an issue if you find a bug.
 
-## Version: v1.2
+## Version: v2.0
 ## Developed by : *quentinformatique*
 
