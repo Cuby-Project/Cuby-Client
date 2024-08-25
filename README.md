@@ -32,6 +32,7 @@
 ---
 ![alt text](src/img/img_1.png)
 ![alt text](src/img/img.png)
+![alt text](src/img/img_2.png)
 ## Installation
 
 ---
