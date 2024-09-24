@@ -9,6 +9,7 @@
     <script defer src="../../node_modules/@fortawesome/fontawesome-free/js/solid.js"></script>
     <script defer src="../../node_modules/@fortawesome/fontawesome-free/js/fontawesome.js"></script>
     <script defer src="../js/renderers/render.js"></script>
+    <script defer src="../js/loadSidebar.js"></script>
     <title>Cuby</title>
 </head>
 <body class="bg-white dark:bg-custom-gray-0">
@@ -22,40 +23,8 @@
     </div>
 </header>
 <div class="flex mt-7">
-    <div class="flex-none">
-        <div class="h-[calc(100vh-35px)] w-16 flex flex-col bg-blue-100 dark:bg-custom-gray-2">
-    <a href="index.html">
-        <div class="side-bar-main">
-            <img src="../img/icon.png" alt="icon">
-        </div>
-    </a>
-    <a href="timer.html">
-        <div class="side-bar-item group">
-            <i class="fa-solid fa-stopwatch text-custom-blue fa-2xl group-hover:text-white"></i>
-        </div>
-    </a>
-    <a href="#">
-        <div class="side-bar-item-disabled group">
-            <i class="fa-solid fa-microchip text-custom-blue fa-2xl group-hover:text-white"></i>
-        </div>
-    </a>
-    <a href="stats.html">
-        <div class="side-bar-item group">
-            <i class="fa-solid fa-chart-simple text-custom-blue fa-2xl group-hover:text-white"></i>
-        </div>
-    </a>
-    <a href="#">
-        <div class="side-bar-item-disabled group">
-            <i class="fa-solid fa-book text-custom-blue fa-2xl group-hover:text-white"></i>
-        </div>
-    </a>
-    <a href="settings.html">
-        <div class="side-bar-item group">
-            <i class="fa-solid fa-gears text-custom-blue fa-2xl group-hover:text-white"></i>
-        </div>
-    </a>
-</div>
-    </div>
+    <!-- add sidebar.html -->
+    <div id="sidebar-container" class="flex-none"></div>
     <div class="flex-1">
         <div class="grid grid-rows-2 grid-cols-2 h-[calc(100vh-35px)]">
             <div class="p-5">
