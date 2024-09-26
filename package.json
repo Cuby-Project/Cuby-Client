@@ -8,7 +8,9 @@
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "publish": "electron-forge publish"
+    "publish": "electron-forge publish",
+    "tailwind:watch": "npx tailwindcss -i ./src/css/input.css -o ./src/css/tailwind/output.css --watch"
+    
   },
   "repository": {
     "type": "git",
