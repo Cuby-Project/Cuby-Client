@@ -86,3 +86,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - [Report a bug](https://github.com/quentinformatique/Cuby/issues/new/choose)
 - [Request a feature](https://github.com/quentinformatique/Cuby/issues/new/choose)
+
+## 👨‍💻 Author
+
+*quentinformatique*
+
+## 📞 Support
+
+- [Report a bug](https://github.com/quentinformatique/Cuby/issues/new/choose)
+- [Request a feature](https://github.com/quentinformatique/Cuby/issues/new/choose)
+
